@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="es">
 <head>
@@ -300,7 +299,7 @@ body.light-mode .terminal { box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
     scroll-behavior: smooth;
 }
 
-/* --- ESTILOS INTERNOS DE LAS DEMOS (ALICANTE EDITION) --- */
+/* --- ESTILOS INTERNOS DE LAS DEMOS (ALICANTE EDITION & MOBILE OPTIMIZED) --- */
 
 /* 1. COSTA E-BIKES (Estilo Sport/Turismo) */
 .demo-velox { font-family: 'Inter', sans-serif; background: #fff; color: #333; overflow-x: hidden; min-height:100%; }
@@ -384,39 +383,74 @@ body.light-mode .terminal { box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
     letter-spacing: 2px; opacity: 0.6; transform: rotate(-2deg);
 }
 
-/* MOBILE */
+/* MOBILE MENU (FULL SCREEN OVERLAY) */
 .mobile-header { display: none; }
-.mobile-nav { display: none; }
-.contact-info-card { margin-bottom: 30px; }
-.contact-detail-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 14px; color: var(--txt-muted); }
-.contact-detail-row i { font-size: 20px; color: var(--accent); }
+.mobile-menu-overlay {
+    position: fixed; inset: 0; background: rgba(9, 9, 11, 0.98); backdrop-filter: blur(15px);
+    z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mobile-menu-overlay.active { opacity: 1; pointer-events: all; }
+.mob-menu-btn {
+    width: 80%; max-width: 300px; padding: 15px; margin: 8px 0;
+    background: var(--bg-panel); border: 1px solid var(--border-dim);
+    color: var(--txt-main); font-family: var(--font-ui); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: 0.2s; font-size: 14px;
+}
+.mob-menu-btn:active { transform: scale(0.96); background: var(--bg-sub); border-color: var(--accent); color: var(--accent); }
+.mob-menu-btn i { font-size: 18px; }
+.mob-menu-close {
+    position: absolute; top: 25px; right: 25px; background: transparent; border: none;
+    color: var(--txt-muted); font-size: 32px; cursor: pointer;
+}
 
 @media (max-width: 900px) {
   .sidebar { display: none; }
-  .mobile-header { display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; background: rgba(9, 9, 11, 0.95); backdrop-filter: blur(15px); padding: 15px 20px; border-bottom: 1px solid var(--border-dim); margin-bottom: 0; }
+  
+  /* NEW MOBILE HEADER */
+  .mobile-header { 
+      display: flex; justify-content: space-between; align-items: center; 
+      position: sticky; top: 0; z-index: 100; 
+      background: rgba(9, 9, 11, 0.95); backdrop-filter: blur(15px); 
+      padding: 15px 20px; border-bottom: 1px solid var(--border-dim); 
+      height: var(--header-h);
+  }
   body.light-mode .mobile-header { background: rgba(240, 242, 245, 0.95); }
-  .brand-text-small { font-family: var(--font-code); font-weight: 800; font-size: 18px; color: var(--txt-main); }
-  .mobile-lang-row { display: flex; gap: 8px; }
-  .mob-lang-btn { background: var(--bg-sub); border: 1px solid var(--border-dim); color: var(--txt-muted); padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; cursor: pointer; }
-  .mob-lang-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .mobile-nav { display: flex; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(24, 24, 27, 0.95); backdrop-filter: blur(15px); padding: 12px 20px; border-radius: 50px; border: 1px solid var(--border-dim); gap: 20px; z-index: 1000; box-shadow: 0 15px 40px rgba(0,0,0,0.4); width: auto; max-width: 95%; justify-content: center; align-items: center; }
-  body.light-mode .mobile-nav { background: rgba(255,255,255,0.9); box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-color: rgba(0,0,0,0.1); }
-  .mobile-nav i { font-size: 24px; color: var(--txt-muted); transition: 0.2s; cursor: pointer; }
-  .mobile-nav i.active { color: var(--accent); transform: translateY(-2px); }
-  .nav-sep { width: 1px; height: 20px; background: var(--border-dim); margin: 0 5px; }
   
-  /* AJUSTE IMPORTANTE: PADDING EXTRA PARA EL MENU MOVIL */
-  .section { padding: 0 20px 150px; margin-top: 20px; } 
+  .brand-text-small { font-family: var(--font-code); font-weight: 800; font-size: 20px; color: var(--txt-main); letter-spacing: -1px; }
+  .mobile-controls { display: flex; gap: 15px; align-items: center; }
+  .icon-btn { background: transparent; border: none; color: var(--txt-main); font-size: 24px; cursor: pointer; display: flex; align-items: center; }
   
+  .section { padding: 20px 20px 40px; margin-top: 0; padding-top: 20px; } 
   .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 25px; }
-  h1 { font-size: 28px; }
+  h1 { font-size: 32px; }
   .card { padding: 20px; }
-  .card:hover { transform: none; }
-  .toggle-switch { width: 100%; max-width: 320px; }
+  .toggle-switch { width: 100%; max-width: 100%; }
   
-  /* Ajustes responsive para las demos */
-  .dv-specs, .ds-services, .dk-menu-grid { grid-template-columns: 1fr !important; }
-  .ds-hero { grid-template-columns: 1fr !important; }
+  /* Adjust Demos for Mobile - OPTIMIZED */
+  .browser-window { width: 100% !important; height: 100% !important; border-radius: 0; }
+  
+  /* Costa E-Bikes Mobile */
+  .dv-nav { padding: 15px 20px; }
+  .dv-nav div { display: none !important; } /* Ocultar links nav */
+  .dv-hero { height: 300px; }
+  .dv-hero h1 { font-size: 36px; }
+  .dv-specs { grid-template-columns: 1fr !important; margin-top: 20px; }
+  
+  /* Navarro Mobile */
+  .ds-topbar { justify-content: center; flex-wrap: wrap; gap: 10px; }
+  .ds-nav { padding: 15px 20px; flex-direction: column; gap: 10px; }
+  .ds-nav div { display: none !important; }
+  .ds-hero { grid-template-columns: 1fr !important; padding: 30px 20px; gap: 30px; }
+  .ds-image { height: 200px; order: -1; } /* Imagen primero */
+  .ds-services { grid-template-columns: 1fr !important; padding: 30px 20px; }
+  
+  /* Mare Nostrum Mobile */
+  .dk-hero { height: 300px; }
+  .dk-title { font-size: 40px; }
+  .dk-menu-grid { grid-template-columns: 1fr !important; gap: 30px; padding: 30px 20px; }
   
   /* Legal mobile */
   .legal-content { padding: 20px; }
@@ -432,8 +466,26 @@ body.light-mode .terminal { box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
     <div class="loader-bar"><div class="loader-progress"></div></div>
 </div>
 
+<!-- MOBILE MENU OVERLAY (NEW) -->
+<div id="mobile-menu" class="mobile-menu-overlay">
+    <button class="mob-menu-close" onclick="toggleMobileMenu()"><i class="ph ph-x"></i></button>
+    
+    <div class="lang-container" style="margin-bottom: 30px;">
+        <button class="lang-btn active" onclick="setLanguage('es'); toggleMobileMenu()" id="mob-es">ES</button>
+        <button class="lang-btn" onclick="setLanguage('en'); toggleMobileMenu()" id="mob-en">EN</button>
+        <button class="lang-btn" onclick="setLanguage('nl'); toggleMobileMenu()" id="mob-nl">NL</button>
+    </div>
+
+    <button class="mob-menu-btn" onclick="nav('dashboard'); toggleMobileMenu()"><i class="ph ph-monitor"></i> <span data-i18n="nav_dash">Resumen</span></button>
+    <button class="mob-menu-btn" onclick="nav('portfolio'); toggleMobileMenu()"><i class="ph ph-images-square"></i> <span data-i18n="nav_port">Proyectos</span></button>
+    <button class="mob-menu-btn" onclick="nav('method'); toggleMobileMenu()"><i class="ph ph-git-branch"></i> <span data-i18n="nav_method">Metodología</span></button>
+    <button class="mob-menu-btn" onclick="nav('pricing'); toggleMobileMenu()"><i class="ph ph-tag"></i> <span data-i18n="nav_price">Planes</span></button>
+    <button class="mob-menu-btn" onclick="nav('faq'); toggleMobileMenu()"><i class="ph ph-question"></i> <span data-i18n="nav_faq">Ayuda</span></button>
+    <button class="mob-menu-btn" onclick="nav('contact'); toggleMobileMenu()" style="background:var(--accent); color:#fff; border-color:var(--accent); margin-top:20px;"><i class="ph ph-paper-plane-tilt"></i> <span data-i18n="btn_contact">Contactar</span></button>
+</div>
+
 <div id="app">
-  <!-- SIDEBAR -->
+  <!-- SIDEBAR (DESKTOP) -->
   <nav class="sidebar">
     <div class="brand">
         <span class="brand-text">WP SYSTEM</span>
@@ -462,13 +514,12 @@ body.light-mode .terminal { box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
   <!-- MAIN CONTENT -->
   <main class="viewport">
 
-    <!-- MOBILE HEADER -->
+    <!-- MOBILE HEADER (NEW) -->
     <header class="mobile-header">
-        <span class="brand-text-small" style="font-family:var(--font-code); font-weight:800; font-size:18px;">WP SYSTEM</span>
-        <div class="mobile-lang-row">
-            <button class="mob-lang-btn active" onclick="setLanguage('es')" id="mob-es">ES</button>
-            <button class="mob-lang-btn" onclick="setLanguage('en')" id="mob-en">EN</button>
-            <button class="mob-lang-btn" onclick="setLanguage('nl')" id="mob-nl">NL</button>
+        <span class="brand-text-small">WP SYSTEM</span>
+        <div class="mobile-controls">
+            <button class="icon-btn" onclick="toggleTheme()"><i class="ph ph-moon" id="mobile-theme-icon"></i></button>
+            <button class="icon-btn" onclick="toggleMobileMenu()"><i class="ph ph-list"></i></button>
         </div>
     </header>
 
@@ -847,12 +898,6 @@ body.light-mode .terminal { box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
     </section>
 
   </main>
-  
-  <!-- MOBILE NAV -->
-  <nav class="mobile-nav">
-    <i class="ph ph-monitor active" onclick="nav('dashboard')"></i><i class="ph ph-git-branch" onclick="nav('method')"></i><i class="ph ph-tag" onclick="nav('pricing')"></i><i class="ph ph-images-square" onclick="nav('portfolio')"></i><i class="ph ph-question" onclick="nav('faq')"></i><i class="ph ph-paper-plane-tilt" onclick="nav('contact')"></i>
-    <div class="nav-sep" style="width:1px; height:20px; background:rgba(255,255,255,0.2);"></div><i class="ph ph-moon" onclick="toggleTheme()" id="mobile-theme-icon"></i>
-  </nav>
 
 </div>
 
@@ -880,6 +925,12 @@ body.light-mode .terminal { box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
 </div>
 
 <script>
+// --- MOBILE MENU TOGGLE ---
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('active');
+}
+
 // --- TRADUCCIONES COMPLETAS ---
 const i18n = {
     es: {
