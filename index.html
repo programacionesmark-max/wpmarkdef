@@ -37,6 +37,7 @@
   --font-ui: 'Inter', sans-serif;
   --sidebar-w: 260px;
   --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --header-h: 60px;
 }
 
 /* --- MODO CLARO --- */
@@ -294,6 +295,22 @@ body.light-mode .terminal { box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
     display: flex; align-items: center; gap: 10px;
 }
 
+/* Botón "Atrás" en Demo */
+.browser-back-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-left: 10px;
+    font-family: var(--font-ui);
+}
+
 .browser-content {
     flex: 1; overflow-y: auto; background: #fff; position: relative;
     scroll-behavior: smooth;
@@ -387,8 +404,8 @@ body.light-mode .terminal { box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
 .mobile-header { display: none; }
 .mobile-menu-overlay {
     position: fixed; inset: 0; background: rgba(9, 9, 11, 0.98); backdrop-filter: blur(15px);
-    z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: 0.3s ease;
 }
 .mobile-menu-overlay.active { opacity: 1; pointer-events: all; }
 .mob-menu-btn {
@@ -916,6 +933,8 @@ body.light-mode .terminal { box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
                 <span id="preview-url">https://loading...</span>
                 <i class="ph ph-arrow-clockwise" style="margin-left:auto; cursor:pointer"></i>
             </div>
+            <!-- BOTÓN ATRÁS PARA SALIR DE LA DEMO -->
+            <button class="browser-back-btn" onclick="closePreview()"><i class="ph ph-arrow-left"></i> ATRÁS</button>
         </div>
         <!-- Contenido de la web simulada -->
         <div class="browser-content" id="preview-content">
@@ -1129,12 +1148,13 @@ function setLanguage(lang) {
     });
 }
 
-// NAV MEJORADO CON HISTORIAL
+// NAV MEJORADO CON HISTORIAL Y SCROLL RESET
 function nav(id, pushHistory = true) {
   document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
   const target = document.getElementById(id);
   if(target) {
       target.classList.add('active');
+      target.scrollTop = 0; // SCROLL AL INICIO AL CAMBIAR
       target.querySelectorAll('.stagger-entry').forEach(item => { item.style.animation='none'; item.offsetHeight; item.style.animation=''; });
   }
   
@@ -1145,9 +1165,12 @@ function nav(id, pushHistory = true) {
   // Activar sidebar
   document.querySelectorAll(`.nav-item[onclick*="'${id}'"]`).forEach(el => el.classList.add('active'));
   
-  // Activar móvil
+  // Activar móvil (si existiera)
   const mobMap = { 'dashboard':0, 'method':1, 'pricing':2, 'portfolio':3, 'faq':4, 'contact':5 };
-  if(mobMap[id] !== undefined) document.querySelectorAll('.mobile-nav i')[mobMap[id]].classList.add('active');
+  if(mobMap[id] !== undefined) {
+      const mobIcons = document.querySelectorAll('.mobile-nav i');
+      if (mobIcons.length > 0) mobIcons[mobMap[id]].classList.add('active');
+  }
 
   // Push State (Cambiar URL)
   if (pushHistory) {
