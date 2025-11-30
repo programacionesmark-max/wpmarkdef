@@ -30,7 +30,7 @@
   --bg-core: #09090b;
   --bg-panel: #18181b;
   --bg-sub: #27272a;
-  --bg-card-header: #27272a; /* Fondo oscuro por defecto para cabeceras de cards */
+  --bg-card-header: #27272a;
   --border-dim: rgba(255, 255, 255, 0.08);
   --border-bright: rgba(255, 255, 255, 0.2);
   --txt-main: #f4f4f5;
@@ -48,12 +48,12 @@
   --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --header-h: 60px;
   
-  /* Colores específicos de proyectos (Oscuro por defecto) */
+  /* Colores Proyectos (Dark) */
   --p-velox-bg: linear-gradient(135deg, #1e1e24, #2a2a30);
   --p-stratum-bg: linear-gradient(135deg, #0f172a, #1e293b);
   --p-kuro-bg: linear-gradient(135deg, #27272a, #3f3f46);
   --p-apex-bg: linear-gradient(135deg, #14532d, #166534);
-  --p-icon-color: #71717a; /* Color icono inactivo oscuro */
+  --p-icon-color: #71717a;
 }
 
 /* --- MODO CLARO (ABSOLUTO) --- */
@@ -61,7 +61,7 @@ body.light-mode {
   --bg-core: #f0f2f5;      
   --bg-panel: #ffffff;     
   --bg-sub: #e4e4e7;
-  --bg-card-header: #f3f4f6; /* Fondo claro para cabeceras */
+  --bg-card-header: #f3f4f6;
   --border-dim: rgba(0, 0, 0, 0.08);
   --border-bright: rgba(0, 0, 0, 0.15);
   --txt-main: #18181b;     
@@ -74,7 +74,7 @@ body.light-mode {
   --social: #9333ea;       
   --ads: #ca8a04;
   
-  /* Colores de proyectos en MODO CLARO (Pasteles suaves) */
+  /* Colores Proyectos (Light) */
   --p-velox-bg: linear-gradient(135deg, #e0f2fe, #f0f9ff);
   --p-stratum-bg: linear-gradient(135deg, #ffedd5, #fff7ed);
   --p-kuro-bg: linear-gradient(135deg, #f3f4f6, #f9fafb);
@@ -96,12 +96,9 @@ body {
   background-size: 24px 24px;
   transition: background 0.4s, color 0.4s;
 }
-/* Invertir el patrón del fondo en modo claro para que se vea sutil */
-body.light-mode {
-    background-image: radial-gradient(circle at center, rgba(0,0,0,0.03) 1px, transparent 1px);
-}
+body.light-mode { background-image: radial-gradient(circle at center, rgba(0,0,0,0.03) 1px, transparent 1px); }
 
-/* FIX: Ocultar cabecera móvil en PC */
+/* IMPORTANTE: Ocultar cabecera móvil en PC */
 .mobile-header { display: none; }
 
 /* EFECTO SPOTLIGHT */
@@ -450,6 +447,64 @@ body.light-mode .legal-clause summary:hover { background: rgba(0,0,0,0.05); }
     font-family: 'Playfair Display', serif; font-style: italic;
     color: var(--accent); font-size: 20px; transform: rotate(-2deg);
     display: inline-block;
+}
+
+/* =========================================
+   DEMO SYSTEMS - ESTILOS DE LOS PROYECTOS (MODERNOS)
+   ========================================= */
+
+/* --- 1. COSTA E-BIKES (Estilo Tesla/Tech) --- */
+.demo-velox-wrapper { font-family: 'Inter', sans-serif; background: #111; color: #fff; overflow-x: hidden; }
+.dv-nav { display:flex; justify-content:space-between; align-items:center; padding:20px 40px; background:rgba(0,0,0,0.8); backdrop-filter:blur(10px); position:sticky; top:0; z-index:100; border-bottom:1px solid rgba(255,255,255,0.1); }
+.dv-logo { font-weight:800; font-size:20px; letter-spacing:-1px; }
+.dv-hero { min-height:500px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:radial-gradient(circle at center, #2a2a30 0%, #000 100%); position:relative; padding: 40px; }
+.dv-badge { background: rgba(59,130,246,0.2); color:#60a5fa; border:1px solid #3b82f6; padding: 5px 12px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 1px; margin-bottom: 20px; text-transform: uppercase; }
+.dv-title { font-size:56px; font-weight:900; letter-spacing:-2px; line-height:1; margin-bottom:20px; background: -webkit-linear-gradient(#fff, #999); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.dv-btn { background:#3b82f6; color:white; padding:15px 40px; border-radius:30px; font-weight:600; letter-spacing:0.5px; border:none; box-shadow:0 0 30px rgba(59,130,246,0.4); cursor: pointer; transition: 0.3s; }
+.dv-btn:hover { transform: scale(1.05); box-shadow:0 0 50px rgba(59,130,246,0.6); }
+.dv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 800px; margin: -50px auto 50px; position: relative; z-index: 10; padding: 0 20px; }
+.dv-card { background: rgba(20,20,20,0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 16px; text-align: center; }
+.dv-val { font-size: 32px; font-weight: 700; display: block; margin-bottom: 5px; }
+.dv-lbl { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+
+/* --- 2. NAVARRO LEGAL (Estilo Editorial/Serio) --- */
+.demo-stratum-wrapper { font-family: 'Playfair Display', serif; background: #fdfbf7; color: #1c1917; }
+.ds-nav { padding: 25px 60px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e7e5e4; }
+.ds-logo { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+.ds-menu { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; display: flex; gap: 30px; text-transform: uppercase; letter-spacing: 1px; color: #57534e; }
+.ds-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 500px; border-bottom: 1px solid #e7e5e4; }
+.ds-content { padding: 80px; display: flex; flex-direction: column; justify-content: center; }
+.ds-tag { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; color: #b45309; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+.ds-title { font-size: 48px; line-height: 1.1; margin-bottom: 30px; font-style: italic; }
+.ds-p { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.7; color: #57534e; margin-bottom: 40px; max-width: 400px; }
+.ds-btn { background: #1c1917; color: #fff; padding: 16px 32px; border: none; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; width: fit-content; transition: 0.3s; }
+.ds-btn:hover { background: #b45309; }
+.ds-img { background: url('https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=2000&auto=format&fit=crop') center/cover; }
+.ds-stats { display: flex; justify-content: space-around; padding: 60px; background: #e7e5e4; }
+.ds-stat h4 { font-size: 36px; margin: 0; font-weight: 400; }
+.ds-stat span { font-family: 'Inter', sans-serif; font-size: 11px; color: #57534e; text-transform: uppercase; letter-spacing: 1px; }
+
+/* --- 3. MARE NOSTRUM (Estilo Lujo/Oscuro) --- */
+.demo-kuro-wrapper { font-family: 'Inter', sans-serif; background: #050505; color: #e5e5e5; }
+.dk-nav { padding: 30px; text-align: center; border-bottom: 1px solid #222; display: flex; justify-content: center; align-items: center; }
+.dk-logo { font-family: 'Playfair Display', serif; font-size: 24px; font-style: italic; color: #fbbf24; letter-spacing: 1px; }
+.dk-hero { height: 400px; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2000&auto=format&fit=crop') center/cover; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.dk-sub { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #fff; margin-bottom: 15px; opacity: 0.8; }
+.dk-title { font-family: 'Playfair Display', serif; font-size: 60px; color: #fbbf24; margin-bottom: 30px; line-height: 1; }
+.dk-btn { border: 1px solid #fbbf24; color: #fbbf24; background: transparent; padding: 12px 30px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+.dk-btn:hover { background: #fbbf24; color: #000; }
+.dk-menu { padding: 60px 40px; max-width: 600px; margin: 0 auto; }
+.dk-item { display: flex; justify-content: space-between; align-items: baseline; padding: 20px 0; border-bottom: 1px dashed #333; transition: 0.3s; cursor: default; }
+.dk-item:hover { transform: translateX(10px); }
+.dk-item h4 { font-family: 'Playfair Display', serif; font-size: 18px; margin: 0; color: #fff; }
+.dk-item span { color: #fbbf24; font-weight: 700; }
+.dk-desc { display: block; font-size: 11px; color: #666; margin-top: 5px; }
+
+/* Responsive para Demos */
+@media (max-width: 768px) {
+    .dv-title { font-size: 40px; } .dv-grid { grid-template-columns: 1fr; }
+    .ds-hero { grid-template-columns: 1fr; } .ds-img { height: 250px; order: -1; } .ds-nav { padding: 20px; } .ds-content { padding: 40px 20px; }
+    .dk-title { font-size: 40px; }
 }
 
 /* FIX CRÍTICO: OCULTAR EL MENÚ MÓVIL EN ESCRITORIO */
@@ -1478,6 +1533,145 @@ function submitContact(method) {
             btn.disabled = false;
         });
     }
+}
+
+// --- DATOS DE LAS DEMOS FUNCIONALES ---
+const projectsData = {
+    'velox': { 
+        url: 'https://costa-ebikes.es/reservas', 
+        html: `
+        <div class="demo-velox-wrapper">
+            <div class="dv-nav">
+                <div class="dv-logo">VELOX<span style="color:#3b82f6">.</span></div>
+                <div style="font-size:12px; font-weight:600; display:flex; gap:20px; color:#ccc;">
+                    <span>MODEL S</span><span>MODEL X</span><span>ALQUILER</span>
+                </div>
+            </div>
+            <div class="dv-hero">
+                <span class="dv-badge">NUEVA FLOTA 2025</span>
+                <h1 class="dv-title">Ingeniería<br>sobre ruedas.</h1>
+                <p style="color:#888; max-width:400px; margin-bottom:30px; font-size:14px; line-height:1.6;">
+                    Explora la Costa Blanca con la bicicleta eléctrica más avanzada del mercado. Autonomía extendida y motor silencioso.
+                </p>
+                <button class="dv-btn" onclick="alert('Demo: Aquí se abriría el motor de reservas Stripe.')">RESERVAR AHORA</button>
+            </div>
+            <div class="dv-grid">
+                <div class="dv-card">
+                    <span class="dv-val">120<small style="font-size:14px">km</small></span>
+                    <span class="dv-lbl">Autonomía</span>
+                </div>
+                <div class="dv-card">
+                    <span class="dv-val">25<small style="font-size:14px">km/h</small></span>
+                    <span class="dv-lbl">Velocidad</span>
+                </div>
+                <div class="dv-card">
+                    <span class="dv-val">0%</span>
+                    <span class="dv-lbl">Emisiones</span>
+                </div>
+            </div>
+            <div style="padding:40px; text-align:center; color:#444; font-size:12px;">
+                <p>Designed by WP MARK &copy; 2025</p>
+            </div>
+        </div>` 
+    },
+    'stratum': { 
+        url: 'https://navarro-asociados.com/inicio', 
+        html: `
+        <div class="demo-stratum-wrapper">
+            <div class="ds-nav">
+                <div class="ds-logo">NAVARRO & ASOC.</div>
+                <div class="ds-menu">
+                    <span>Firma</span><span>Áreas</span><span>Equipo</span>
+                </div>
+            </div>
+            <div class="ds-hero">
+                <div class="ds-content">
+                    <span class="ds-tag">Derecho Internacional</span>
+                    <h1 class="ds-title">Protegemos su patrimonio con rigor jurídico.</h1>
+                    <p class="ds-p">Especialistas en derecho inmobiliario y mercantil para inversores extranjeros en España. Hablamos su idioma y defendemos sus intereses.</p>
+                    <button class="ds-btn" onclick="alert('Demo: Scroll hacia formulario de contacto.')">Solicitar Consulta</button>
+                </div>
+                <div class="ds-img"></div>
+            </div>
+            <div class="ds-stats">
+                <div class="ds-stat"><h4>25+</h4><span>Años Exp.</span></div>
+                <div class="ds-stat"><h4>500M€</h4><span>Gestionados</span></div>
+                <div class="ds-stat"><h4>100%</h4><span>Éxito</span></div>
+            </div>
+        </div>` 
+    },
+    'kuro': { 
+        url: 'https://marenostrum.es/reservas', 
+        html: `
+        <div class="demo-kuro-wrapper">
+            <div class="dk-nav">
+                <span class="dk-logo">Mare Nostrum</span>
+            </div>
+            <div class="dk-hero">
+                <span class="dk-sub">Puerto de Alicante</span>
+                <h1 class="dk-title">Sabor a Mar</h1>
+                <button class="dk-btn" onclick="alert('Demo: Sistema de reservas en tiempo real activado.')">Reservar Mesa</button>
+            </div>
+            <div class="dk-menu">
+                <div style="text-align:center; margin-bottom:40px; color:#888; font-size:10px; letter-spacing:2px; text-transform:uppercase;">Selección del Chef</div>
+                
+                <div class="dk-item">
+                    <div>
+                        <h4>Arroz a Banda</h4>
+                        <span class="dk-desc">Sepia, gamba roja y fumet de roca.</span>
+                    </div>
+                    <span>18€</span>
+                </div>
+                
+                <div class="dk-item">
+                    <div>
+                        <h4>Tartar de Atún</h4>
+                        <span class="dk-desc">Atún rojo de almadraba, aguacate y wasabi.</span>
+                    </div>
+                    <span>24€</span>
+                </div>
+
+                <div class="dk-item">
+                    <div>
+                        <h4>Gamba Roja (Dénia)</h4>
+                        <span class="dk-desc">Hervida en agua de mar (100g).</span>
+                    </div>
+                    <span>S/M</span>
+                </div>
+            </div>
+        </div>` 
+    }
+};
+
+function openPreview(id) {
+    const modal = document.getElementById('project-preview-modal');
+    document.getElementById('preview-url').innerText = projectsData[id].url;
+    document.getElementById('preview-content').innerHTML = projectsData[id].html;
+    modal.classList.add('active');
+}
+function closePreview() { document.getElementById('project-preview-modal').classList.remove('active'); }
+document.getElementById('project-preview-modal').addEventListener('click', function(e) { if (e.target === this) closePreview(); });
+
+// --- FILTRO DE PROYECTOS ---
+function filterProjects(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cards = document.querySelectorAll('.project-card');
+    cards.forEach(card => {
+        if (cat === 'all') {
+            card.style.display = 'block';
+            setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
+        } else {
+            if (card.classList.contains(`category-${cat}`)) {
+                card.style.display = 'block';
+                setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => card.style.display = 'none', 300);
+            }
+        }
+    });
 }
 
 // Script pequeño para la fecha automática en el contrato
