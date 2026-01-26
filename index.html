@@ -3,2202 +3,303 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markstein Language Studio | Privélessen Spaans in Nederland</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap"
+    <title>Mijn Spaanse Vriendje ☁️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Nunito:wght@400;700&display=swap"
         rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --primary: #5D7EB6;
-            --secondary: #6BA368;
-            --accent: #FF8A65;
-            --light: #F9FAFB;
-            --dark: #37474F;
-            --gray: #78909C;
-            --light-gray: #ECEFF1;
-            --success: #4CAF50;
-            --border-radius: 12px;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            --soft-blue: #E3F2FD;
+            --soft-pink: #FCE4EC;
+            --soft-yellow: #FFF9C4;
+            --soft-green: #E8F5E9;
+            --text-color: #5C677D;
+            --accent: #90CAF9;
         }
 
         body {
-            font-family: 'Open Sans', sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: #fff;
-            overflow-x: hidden;
-            position: relative;
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--soft-blue);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            color: var(--text-color);
+            overflow: hidden;
         }
 
-        /* Elementos decorativos flotantes */
-        .floating-element {
+        /* Decoración infantil */
+        .cloud {
             position: absolute;
+            background: white;
+            border-radius: 100px;
+            opacity: 0.6;
             z-index: -1;
-            opacity: 0.1;
-            font-size: 2rem;
-            color: var(--primary);
-            transition: var(--transition);
         }
 
-        .floating-element.book {
-            color: var(--secondary);
-        }
-
-        .floating-element.pen {
-            color: var(--accent);
-        }
-
-        .flag-nl {
-            color: #AE1C28;
-        }
-
-        .flag-es {
-            color: #F1BF00;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-        }
-
-        h2 {
-            font-size: 2.2rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-
-        h2:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background-color: var(--secondary);
-            border-radius: 2px;
-        }
-
-        h3 {
-            font-size: 1.6rem;
-        }
-
-        p {
-            margin-bottom: 1.2rem;
-            color: var(--gray);
-        }
-
-        .container {
+        /* Cabecera suave */
+        .top-bar {
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        section {
-            padding: 80px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-header h2 {
-            display: inline-block;
-        }
-
-        .section-header h2:after {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--secondary);
-            color: white;
-            padding: 14px 32px;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.7s;
-        }
-
-        .btn:hover:before {
-            left: 100%;
-        }
-
-        .btn:hover {
-            background-color: #5A9367;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(107, 142, 35, 0.15);
-        }
-
-        .btn-light {
-            background-color: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-light:hover {
-            background-color: var(--light);
-            color: var(--primary);
-        }
-
-        /* Animaciones */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-20px) rotate(5deg);
-            }
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 0.1;
-            }
-
-            50% {
-                transform: scale(1.1);
-                opacity: 0.15;
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.8s ease forwards;
-        }
-
-        .slide-in-left {
-            animation: slideInLeft 0.8s ease forwards;
-        }
-
-        .slide-in-right {
-            animation: slideInRight 0.8s ease forwards;
-        }
-
-        .float-animation {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .pulse-animation {
-            animation: pulse 4s ease-in-out infinite;
-        }
-
-        /* Header & Navigation */
-        header {
-            background-color: rgba(255, 255, 255, 0.98);
-            box-shadow: var(--shadow);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            transition: var(--transition);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-
-        .logo {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo i {
-            margin-right: 10px;
-            color: var(--accent);
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 2rem;
-            position: relative;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            font-size: 1.1rem;
-            transition: var(--transition);
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-links a i {
-            margin-right: 8px;
-            font-size: 1.2rem;
-        }
-
-        .nav-links a:after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--secondary);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover:after {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--primary);
-            cursor: pointer;
-            z-index: 1001;
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(93, 126, 182, 0.9), rgba(93, 126, 182, 0.85)), url('https://images.unsplash.com/photo-1519861531473-920034658307?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 180px 0 100px;
-            margin-top: 80px;
-        }
-
-        .hero h1 {
-            color: white;
-            font-size: 3.2rem;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .hero p {
-            color: rgba(255, 255, 255, 0.95);
-            font-size: 1.3rem;
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
-        }
-
-        .hero-btns {
+            padding: 20px;
             display: flex;
             justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
         }
 
-        /* Elementos decorativos en hero */
-        .hero-flags {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 15px;
-            font-size: 2rem;
+        .score-pill {
+            background: white;
+            padding: 8px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            color: #90CAF9;
         }
 
-        /* About Section */
-        .about-content {
+        /* Área de juego */
+        .game-area {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 40px;
-        }
-
-        .about-text {
-            width: 100%;
-        }
-
-        /* Iconos de banderas en sección sobre mí */
-        .flag-container {
-            display: flex;
             justify-content: center;
-            gap: 30px;
-            margin: 30px 0;
-            font-size: 2.5rem;
-        }
-
-        /* Método de Trabajo */
-        .work-method {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 2rem;
-        }
-
-        .method-step {
-            background-color: white;
-            padding: 30px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            border-left: 5px solid var(--primary);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .method-step:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.5s ease;
-        }
-
-        .method-step:hover:before {
-            transform: scaleX(1);
-        }
-
-        .method-step:hover {
-            transform: translateY(-5px);
-            border-left-color: var(--accent);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-        }
-
-        .method-step-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        /* Why Learn Spanish */
-        .why-learn {
-            background-color: var(--light);
-        }
-
-        .reasons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 3rem;
-        }
-
-        .reason-card {
-            background-color: white;
-            padding: 30px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .reason-card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 0;
-            background: linear-gradient(to bottom, var(--secondary), var(--accent));
-            transition: height 0.5s ease;
-        }
-
-        .reason-card:hover:before {
-            height: 100%;
-        }
-
-        .reason-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        .reason-card i {
-            font-size: 2.5rem;
-            color: var(--secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        /* Classes Section */
-        .classes-method {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 3rem;
-        }
-
-        .method-card {
-            background-color: white;
-            padding: 30px;
-            border-radius: var(--border-radius);
-            border-top: 5px solid var(--primary);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .method-card:hover {
-            border-top-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
-        /* Pricing Section */
-        .pricing {
-            background-color: var(--light);
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 3rem;
-        }
-
-        .pricing-card {
-            background-color: white;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-        }
-
-        .pricing-card.popular {
-            border: 2px solid var(--accent);
-        }
-
-        .popular-tag {
-            position: absolute;
-            top: 20px;
-            right: -30px;
-            background-color: var(--accent);
-            color: white;
-            padding: 5px 30px;
-            font-weight: 600;
-            transform: rotate(45deg);
-            font-size: 0.9rem;
-        }
-
-        .pricing-header {
-            padding: 30px;
-            text-align: center;
-            background: linear-gradient(135deg, var(--primary), #7A9AD6);
-            color: white;
-        }
-
-        .pricing-header h3 {
-            color: white;
-        }
-
-        .price {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin: 10px 0;
-        }
-
-        .pricing-body {
-            padding: 30px;
-        }
-
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .pricing-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--light-gray);
-            display: flex;
             align-items: center;
+            width: 90%;
+            max-width: 1000px;
         }
 
-        .pricing-features li i {
-            color: var(--success);
-            margin-right: 10px;
-        }
-
-        /* For Whom Section */
-        .audience-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 3rem;
-        }
-
-        .audience-card {
-            text-align: center;
-            padding: 30px 20px;
-            border-radius: var(--border-radius);
-            background-color: white;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .audience-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-        }
-
-        .audience-icon {
-            width: 80px;
-            height: 80px;
-            background-color: rgba(93, 126, 182, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            transition: var(--transition);
-        }
-
-        .audience-card:hover .audience-icon {
-            background-color: rgba(107, 163, 104, 0.15);
-            transform: scale(1.1);
-        }
-
-        .audience-icon i {
-            font-size: 2rem;
-            color: var(--primary);
-        }
-
-        /* Pricing Explanation Section */
-        .pricing-explanation {
-            background-color: white;
-            padding: 40px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            margin-top: 3rem;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .pricing-explanation:before {
-            content: '€';
-            position: absolute;
-            top: -30px;
-            right: -30px;
-            font-size: 10rem;
-            color: rgba(107, 163, 104, 0.05);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            z-index: 0;
-        }
-
-        .pricing-explanation:hover {
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        .pricing-explanation h3 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .pricing-explanation ul {
-            margin-left: 20px;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .pricing-explanation li {
-            margin-bottom: 10px;
-            color: var(--gray);
-            position: relative;
-            z-index: 1;
-        }
-
-        /* FAQ Section */
-        .faq {
-            background-color: var(--light);
-        }
-
-        .faq-container {
-            max-width: 800px;
-            margin: 3rem auto 0;
-        }
-
-        .faq-item {
-            margin-bottom: 15px;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
-        }
-
-        .faq-item:hover {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-
-        .faq-question {
-            padding: 20px;
-            background-color: white;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .faq-question i {
-            transition: var(--transition);
-        }
-
-        .faq-answer {
-            padding: 0 20px;
-            background-color: white;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease, padding 0.3s ease;
-        }
-
-        .faq-item.active .faq-answer {
-            padding: 20px;
-            max-height: 500px;
-        }
-
-        .faq-item.active .faq-question i {
-            transform: rotate(180deg);
-        }
-
-        /* Trust Section */
-        .trust-elements {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 3rem;
-        }
-
-        .trust-card {
-            text-align: center;
-            padding: 30px 20px;
-            border-radius: var(--border-radius);
-            background-color: white;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .trust-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-        }
-
-        .trust-card i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            transition: var(--transition);
-        }
-
-        .trust-card:hover i {
-            color: var(--secondary);
-            transform: scale(1.1);
-        }
-
-        /* CTA Section */
-        .cta {
-            background: linear-gradient(135deg, rgba(93, 126, 182, 0.9), rgba(107, 163, 104, 0.85)), url('https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 80px 0;
-            position: relative;
-        }
-
-        .cta h2 {
-            color: white;
-        }
-
-        .cta h2:after {
-            background-color: white;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .cta p {
-            color: rgba(255, 255, 255, 0.95);
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
-            font-size: 1.2rem;
-        }
-
-        /* Contact Section */
-        .contact-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 50px;
-            margin-top: 3rem;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            transition: var(--transition);
-            padding: 15px;
-            border-radius: var(--border-radius);
-        }
-
-        .contact-item:hover {
-            background-color: rgba(236, 239, 241, 0.5);
-        }
-
-        .contact-item i {
-            font-size: 1.5rem;
-            color: var(--secondary);
-            margin-top: 5px;
-        }
-
-        .contact-form {
-            background-color: white;
-            padding: 30px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .contact-form:hover {
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid var(--light-gray);
-            border-radius: var(--border-radius);
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(93, 126, 182, 0.1);
-        }
-
-        textarea.form-control {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 60px 0 30px;
-            position: relative;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column h3 {
-            color: white;
+        .instruction {
             font-size: 1.4rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 25px;
+            color: #7E8C9F;
         }
 
-        .footer-column p,
-        .footer-column a {
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 10px;
+        /* Palabra principal (Estilo Nube) */
+        .word-bubble {
+            background: white;
+            padding: 40px 70px;
+            border-radius: 60px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-bottom: 50px;
+            border: 4px solid #F1F8FF;
+        }
+
+        .word-bubble:hover {
+            transform: scale(1.02);
+        }
+
+        .word-bubble h1 {
+            font-family: 'Fredoka', cursive;
+            font-size: 4.5rem;
+            margin: 0;
+            color: #7BB8FA;
+            letter-spacing: 2px;
+        }
+
+        .audio-hint {
+            font-size: 1rem;
+            color: #B0BEC5;
             display: block;
-            text-decoration: none;
-            transition: var(--transition);
+            margin-top: 10px;
         }
 
-        .footer-column a:hover {
-            color: var(--accent);
-            padding-left: 5px;
+        /* Opciones cuadradas pero muy redondeadas */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
         }
 
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-links a {
-            width: 44px;
-            height: 44px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-
-        .social-links a:hover {
-            background-color: var(--secondary);
-            transform: translateY(-5px);
-        }
-
-        .copyright {
+        .card {
+            background: white;
+            border-radius: 35px;
+            padding: 20px;
             text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease;
+            border: 3px solid transparent;
         }
 
-        /* Animación de aparición al hacer scroll */
-        .fade-in-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+        .card:hover {
+            transform: translateY(-5px);
+            background: var(--soft-yellow);
         }
 
-        .fade-in-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .card .emoji {
+            font-size: 3.5rem;
+            display: block;
+            margin-bottom: 5px;
         }
 
-        /* Responsive Styles - Optimizado EXTRA para móvil */
-        @media (max-width: 992px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            h2 {
-                font-size: 2rem;
-            }
-
-            .hero {
-                padding: 150px 0 80px;
-            }
-
-            .floating-element {
-                display: none;
-            }
+        .card .label {
+            font-size: 1.1rem;
+            color: #9DA9BB;
+            font-weight: 600;
         }
 
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 0;
-                left: 0;
-                background-color: white;
-                width: 100%;
-                height: 100vh;
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-                padding: 100px 0 30px;
-                box-shadow: var(--shadow);
-                transform: translateX(-100%);
-                opacity: 0;
-                transition: transform 0.4s ease, opacity 0.3s ease;
-                z-index: 999;
-                overflow-y: auto;
-            }
+        /* Efectos */
+        .correct-anim {
+            border-color: #A5D6A7 !important;
+            background: #F1F8E9 !important;
+        }
 
-            .nav-links.active {
+        .error-anim {
+            animation: wobble 0.4s;
+            border-color: #EF9A9A !important;
+        }
+
+        @keyframes wobble {
+            0% {
                 transform: translateX(0);
-                opacity: 1;
             }
 
-            .nav-links li {
-                margin: 10px 0;
-                width: 100%;
-                text-align: center;
+            25% {
+                transform: translateX(-5px);
             }
 
-            .nav-links a {
-                font-size: 1.2rem;
-                padding: 12px 20px;
-                justify-content: center;
-                width: 100%;
+            75% {
+                transform: translateX(5px);
             }
 
-            .nav-links a i {
-                margin-right: 12px;
-                font-size: 1.3rem;
-            }
-
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-                padding: 0 10px;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-                padding: 0 15px;
-            }
-
-            section {
-                padding: 60px 0;
-            }
-
-            .hero-btns {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-                padding: 0 20px;
-            }
-
-            .btn {
-                width: 100%;
-                max-width: 320px;
-                padding: 16px 24px;
-                font-size: 1.1rem;
-            }
-
-            .contact-container {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                padding: 0 10px;
-            }
-
-            .pricing-explanation {
-                padding: 25px 20px;
-                margin: 2rem 10px 0;
-            }
-
-            .pricing-explanation:before {
-                font-size: 6rem;
-                top: -10px;
-                right: -10px;
-            }
-
-            .method-step,
-            .reason-card,
-            .method-card,
-            .audience-card,
-            .trust-card {
-                padding: 25px 20px;
-                margin: 0 5px;
-            }
-
-            .work-method,
-            .reasons-grid,
-            .classes-method,
-            .pricing-grid,
-            .audience-grid,
-            .trust-elements {
-                gap: 20px;
-                padding: 0 10px;
-            }
-
-            .faq-question {
-                padding: 18px 15px;
-                font-size: 1rem;
-            }
-
-            .faq-answer {
-                padding: 0 15px;
-            }
-
-            .faq-item.active .faq-answer {
-                padding: 18px 15px;
-            }
-
-            .flag-container {
-                font-size: 2rem;
-                gap: 20px;
-                margin: 20px 0;
-            }
-
-            .container {
-                padding: 0 15px;
-            }
-
-            .hero-flags {
-                top: 15px;
-                right: 15px;
-                font-size: 1.5rem;
-                gap: 10px;
+            100% {
+                transform: translateX(0);
             }
         }
 
-        @media (max-width: 576px) {
-            h1 {
-                font-size: 2rem;
-                line-height: 1.2;
-            }
-
-            h2 {
-                font-size: 1.8rem;
-                line-height: 1.3;
-            }
-
-            h3 {
-                font-size: 1.4rem;
-            }
-
-            .pricing-card {
-                max-width: 100%;
-                margin: 0;
-            }
-
-            .hero {
-                padding: 130px 0 60px;
-            }
-
-            .section-header {
-                margin-bottom: 2rem;
-            }
-
-            .work-method,
-            .reasons-grid,
-            .classes-method,
-            .pricing-grid,
-            .audience-grid,
-            .trust-elements {
-                grid-template-columns: 1fr;
-            }
-
-            .pricing-header,
-            .pricing-body {
-                padding: 20px 15px;
-            }
-
-            .contact-form {
-                padding: 25px 20px;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 30px;
-                text-align: center;
-            }
-
-            .logo {
-                font-size: 1.4rem;
-            }
-
-            .logo i {
-                font-size: 1.5rem;
-            }
-
-            .mobile-menu-btn {
-                width: 40px;
-                height: 40px;
-            }
-
-            .btn {
-                padding: 16px 20px;
-                font-size: 1.05rem;
-                max-width: 300px;
-            }
-
-            .contact-item {
-                padding: 12px;
-            }
-
-            .social-links {
-                justify-content: center;
-            }
-
-            .social-links a {
-                width: 42px;
-                height: 42px;
-                font-size: 1.1rem;
-            }
-
-            .method-step-number {
-                font-size: 2rem;
-            }
-
-            .popular-tag {
-                font-size: 0.8rem;
-                right: -25px;
-                padding: 4px 25px;
-            }
+        .progress-track {
+            width: 200px;
+            height: 10px;
+            background: #E0E0E0;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
-        @media (max-width: 400px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .btn {
-                padding: 15px 18px;
-                font-size: 1rem;
-                max-width: 280px;
-            }
-
-            .contact-item {
-                padding: 10px;
-                flex-direction: column;
-                text-align: center;
-                align-items: center;
-            }
-
-            .contact-item i {
-                margin-top: 0;
-                margin-bottom: 10px;
-            }
-
-            .social-links a {
-                width: 38px;
-                height: 38px;
-                font-size: 1rem;
-            }
-
-            .flag-container {
-                font-size: 1.8rem;
-                gap: 15px;
-            }
-
-            .pricing-explanation:before {
-                font-size: 5rem;
-            }
-
-            .nav-links a {
-                font-size: 1.1rem;
-                padding: 10px 15px;
-            }
-
-            .copyright {
-                font-size: 0.8rem;
-                padding: 20px 10px 0;
-            }
-        }
-
-        /* Mejoras para tablets */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .container {
-                padding: 0 30px;
-            }
-
-            .work-method,
-            .reasons-grid,
-            .classes-method,
-            .pricing-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .audience-grid,
-            .trust-elements {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .floating-element {
-                font-size: 1.5rem;
-            }
-        }
-
-        /* Mejoras de accesibilidad táctil */
-        .btn,
-        .nav-links a,
-        .faq-question,
-        .social-links a {
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .btn:active,
-        .social-links a:active {
-            transform: scale(0.98);
-        }
-
-        /* Mejora de rendimiento en animaciones */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
+        .progress-bar {
+            height: 100%;
+            background: #90CAF9;
+            width: 0%;
+            transition: width 0.5s;
         }
     </style>
 </head>
 
 <body>
-    <!-- Elementos decorativos flotantes -->
-    <div class="floating-element float-animation" style="top: 15%; left: 5%;">
-        <i class="fas fa-book book"></i>
-    </div>
-    <div class="floating-element float-animation" style="top: 25%; right: 8%;">
-        <i class="fas fa-pen pen"></i>
-    </div>
-    <div class="floating-element pulse-animation" style="top: 60%; left: 10%;">
-        <i class="fas fa-flag flag-nl"></i>
-    </div>
-    <div class="floating-element pulse-animation" style="top: 70%; right: 12%;">
-        <i class="fas fa-flag flag-es"></i>
-    </div>
-    <div class="floating-element float-animation" style="top: 85%; left: 15%;">
-        <i class="fas fa-graduation-cap"></i>
-    </div>
-    <div class="floating-element float-animation" style="top: 40%; right: 5%;">
-        <i class="fas fa-comments"></i>
+
+    <div class="cloud" style="top:10%; left:10%; width:150px; height:60px;"></div>
+    <div class="cloud" style="top:20%; right:15%; width:200px; height:80px;"></div>
+    <div class="cloud" style="bottom:15%; left:20%; width:120px; height:50px;"></div>
+
+    <div class="top-bar">
+        <div class="score-pill">✨ <span id="points">0</span></div>
+        <div class="progress-track">
+            <div class="progress-bar" id="progress"></div>
+        </div>
+        <div style="font-weight: 600; color: #90CAF9;">Mijn Spaanse Vriendje</div>
     </div>
 
-    <!-- Header & Navigation -->
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo"><i class="fas fa-comments"></i> Markstein Language Studio</a>
-                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="#over-mij"><i class="fas fa-user"></i> Over Mij</a></li>
-                    <li><a href="#werkwijze"><i class="fas fa-cogs"></i> Mijn Werkwijze</a></li>
-                    <li><a href="#waarom"><i class="fas fa-question-circle"></i> Waarom Spaans?</a></li>
-                    <li><a href="#lessen"><i class="fas fa-chalkboard-teacher"></i> Lessen</a></li>
-                    <li><a href="#tarieven"><i class="fas fa-euro-sign"></i> Tarieven</a></li>
-                    <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
-                </ul>
-            </nav>
+    <div class="game-area">
+        <div class="instruction">Luister en kies het juiste plaatje:</div>
+
+        <div class="word-bubble" onclick="playVoice()">
+            <h1 id="target-word">...</h1>
+            <span class="audio-hint">Klik om te horen 🔊</span>
         </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-flags">
-            <i class="fas fa-flag flag-nl"></i>
-            <i class="fas fa-flag flag-es"></i>
-        </div>
-        <div class="container fade-in">
-            <h1>Leer Spaans met een Jonge Native Speaker</h1>
-            <p>Persoonlijke Spaanse lessen in Sint Willebrord en omgeving. Ontdek de taal met een frisse, moderne aanpak
-                die bij jou past.</p>
-            <div class="hero-btns">
-                <a href="#contact" class="btn"><i class="fas fa-calendar-check"></i> Gratis Proefles Aanvragen</a>
-                <a href="#over-mij" class="btn btn-light"><i class="fas fa-user-graduate"></i> Leer Jamie Kennen</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="over-mij">
-        <div class="container">
-            <div class="section-header fade-in-on-scroll">
-                <h2>Over Mij</h2>
-            </div>
-            <div class="about-content">
-                <div class="about-text fade-in-on-scroll">
-                    <h3>Hoi, ik ben Jamie (17 jaar)</h3>
-                    <p>Ik ben in Nederland geboren en heb de Nederlandse nationaliteit, maar ben opgegroeid in Spanje,
-                        waar ik 16 jaar heb gewoond. Spaans is daardoor mijn moedertaal.</p>
-
-                    <div class="flag-container fade-in-on-scroll">
-                        <i class="fas fa-flag flag-nl fa-2x"></i>
-                        <i class="fas fa-exchange-alt" style="color: var(--primary); font-size: 1.5rem;"></i>
-                        <i class="fas fa-flag flag-es fa-2x"></i>
-                    </div>
-
-                    <p>Ik geef persoonlijke Spaanse lessen, aangepast aan jouw niveau, tempo en doelen, met focus op
-                        praktische communicatie en zelfvertrouwen in het spreken. Mijn jonge leeftijd betekent dat ik
-                        een frisse, moderne benadering heb die goed aansluit bij kinderen, tieners en jonge volwassenen.
-                    </p>
-                    <p>Omdat ik zowel de Nederlandse als Spaanse cultuur ken, kan ik de taal op een begrijpelijke manier
-                        uitleggen. Ik begrijp welke uitdagingen Nederlanders hebben bij het leren van Spaans.</p>
-                    <p>Markstein Language Studio is mijn nieuwe project, dus ik kan mijn volledige aandacht geven aan
-                        elke leerling. Ik kijk ernaar uit om mijn eerste leerlingen te verwelkomen!</p>
-                    <a href="#contact" class="btn"><i class="fas fa-paper-plane"></i> Stuur een Bericht</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Work Method Section -->
-    <section id="werkwijze">
-        <div class="container">
-            <div class="section-header fade-in-on-scroll">
-                <h2>Mijn Werkwijze</h2>
-            </div>
-            <div class="about-text fade-in-on-scroll">
-                <h3>Hoe werk ik?</h3>
-                <p>Mijn aanpak is persoonlijk, gestructureerd en resultaatgericht. Hier is een overzicht van hoe ik
-                    te werk ga:</p>
-
-                <div class="work-method">
-                    <div class="method-step fade-in-on-scroll">
-                        <div class="method-step-number">1</div>
-                        <h3><i class="fas fa-handshake" style="color: var(--primary); margin-right: 10px;"></i>
-                            Kennismaking & Intake</h3>
-                        <p>We starten met een gratis proefles van 30 minuten. Hierin bespreken we jouw doelen,
-                            niveau, leerstijl en interesses. Dit helpt me een op maat gemaakt plan te maken.</p>
-                    </div>
-                    <div class="method-step fade-in-on-scroll">
-                        <div class="method-step-number">2</div>
-                        <h3><i class="fas fa-clipboard-list" style="color: var(--primary); margin-right: 10px;"></i>
-                            Persoonlijk Leerplan</h3>
-                        <p>Op basis van de intake maak ik een persoonlijk leerplan. Dit plan is flexibel en kan
-                            worden aangepast naarmate je vordert of je doelen veranderen.</p>
-                    </div>
-                    <div class="method-step fade-in-on-scroll">
-                        <div class="method-step-number">3</div>
-                        <h3><i class="fas fa-laptop" style="color: var(--primary); margin-right: 10px;"></i>
-                            Interactieve Lessen</h3>
-                        <p>Mijn lessen zijn interactief en praktisch. We gebruiken actuele materialen zoals
-                            video's, muziek, artikelen en gesprekssituaties. Geen saaie lesboeken, maar levendige
-                            taalverwerving.</p>
-                    </div>
-                    <div class="method-step fade-in-on-scroll">
-                        <div class="method-step-number">4</div>
-                        <h3><i class="fas fa-chart-line" style="color: var(--primary); margin-right: 10px;"></i>
-                            Voortgang & Feedback</h3>
-                        <p>Regelmatig evalueren we je voortgang. Je krijgt persoonlijke feedback en tips om
-                            specifieke uitdagingen aan te pakken. Dit zorgt voor continue verbetering.</p>
-                    </div>
-                    <div class="method-step fade-in-on-scroll">
-                        <div class="method-step-number">5</div>
-                        <h3><i class="fas fa-comments" style="color: var(--primary); margin-right: 10px;"></i>
-                            Praktische Toepassing</h3>
-                        <p>We focussen niet alleen op grammatica, maar vooral op praktische toepassing. Je leert
-                            Spaans gebruiken in echte situaties: gesprekken voeren, vragen stellen, begrijpen wat
-                            er gezegd wordt.</p>
-                    </div>
-                    <div class="method-step fade-in-on-scroll">
-                        <div class="method-step-number">6</div>
-                        <h3><i class="fas fa-hands-helping" style="color: var(--primary); margin-right: 10px;"></i>
-                            Flexibiliteit & Ondersteuning</h3>
-                        <p>Naast de lessen bied ik ondersteuning via WhatsApp voor vragen. Je krijgt ook extra
-                            oefenmateriaal tussen lessen door om je leerproces te versnellen.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Learn Spanish -->
-    <section class="why-learn" id="waarom">
-        <div class="container">
-            <div class="section-header fade-in-on-scroll">
-                <h2>Waarom Spaans Leren?</h2>
-            </div>
-            <div class="reasons-grid">
-                <div class="reason-card fade-in-on-scroll">
-                    <i class="fas fa-globe-europe"></i>
-                    <h3>Wereldwijde Communicatie</h3>
-                    <p>Spaans wordt door meer dan 580 miljoen mensen gesproken in 21 landen. Het opent deuren naar
-                        nieuwe vriendschappen, reismogelijkheden en culturele ervaringen.</p>
-                </div>
-                <div class="reason-card fade-in-on-scroll">
-                    <i class="fas fa-graduation-cap"></i>
-                    <h3>Educatieve Voordelen</h3>
-                    <p>Spaans is een populaire keuze op school en kan je cijfers verbeteren. Bovendien toont het leren
-                        van een extra taal doorzettingsvermogen en discipline.</p>
-                </div>
-                <div class="reason-card fade-in-on-scroll">
-                    <i class="fas fa-heart"></i>
-                    <h3>Persoonlijke Ontwikkeling</h3>
-                    <p>Een nieuwe taal leren verbetert je geheugen, probleemoplossend vermogen en zelfvertrouwen. Het is
-                        een investering in jezelf die je hele leven meedraagt.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Classes Section -->
-    <section id="lessen">
-        <div class="container">
-            <div class="section-header fade-in-on-scroll">
-                <h2>Hoe Zijn Mijn Lessen?</h2>
-            </div>
-            <div class="classes-method">
-                <div class="method-card fade-in-on-scroll">
-                    <h3><i class="fas fa-tachometer-alt" style="color: var(--primary); margin-right: 10px;"></i> Op Jouw
-                        Tempo</h3>
-                    <p>Iedereen leert anders. We gaan in jouw tempo en focussen op wat jij nodig hebt. Geen standaard
-                        lesmethodes, maar maatwerk.</p>
-                </div>
-                <div class="method-card fade-in-on-scroll">
-                    <h3><i class="fas fa-hands" style="color: var(--primary); margin-right: 10px;"></i> Praktisch &
-                        Toepasbaar</h3>
-                    <p>We leren niet alleen grammatica, maar vooral hoe je Spaans gebruikt in echte situaties:
-                        gesprekken voeren, vragen stellen, begrijpen wat er gezegd wordt.</p>
-                </div>
-                <div class="method-card fade-in-on-scroll">
-                    <h3><i class="fas fa-mobile-alt" style="color: var(--primary); margin-right: 10px;"></i> Modern &
-                        Interactief</h3>
-                    <p>Gebruik van actuele onderwerpen, muziek, series en online tools die bij jouw interesses passen.
-                        Geen saaie lesboeken, maar levendige conversatie.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="pricing" id="tarieven">
-        <div class="container">
-            <div class="section-header fade-in-on-scroll">
-                <h2>Tarieven & Pakketten</h2>
-            </div>
-            <div class="pricing-grid">
-                <div class="pricing-card fade-in-on-scroll">
-                    <div class="pricing-header">
-                        <h3><i class="fas fa-seedling" style="margin-right: 10px;"></i> Starter</h3>
-                        <div class="price">€10/uur</div>
-                        <p>Voor beginners</p>
-                    </div>
-                    <div class="pricing-body">
-                        <ul class="pricing-features">
-                            <li><i class="fas fa-check"></i> Basisvocabulaire & uitspraak</li>
-                            <li><i class="fas fa-check"></i> Eenvoudige gesprekken</li>
-                            <li><i class="fas fa-check"></i> Leuke, interactieve oefeningen</li>
-                            <li><i class="fas fa-check"></i> Flexibele planning</li>
-                            <li><i class="fas fa-check"></i> Alle materialen inbegrepen</li>
-                        </ul>
-                        <a href="#contact" class="btn" style="width: 100%;"><i class="fas fa-rocket"></i> Start
-                            Vandaag</a>
-                    </div>
-                </div>
-
-                <div class="pricing-card popular fade-in-on-scroll">
-                    <div class="popular-tag">Populair</div>
-                    <div class="pricing-header">
-                        <h3><i class="fas fa-tree" style="margin-right: 10px;"></i> Gevorderd</h3>
-                        <div class="price">€15/uur</div>
-                        <p>Voor meer ervaren leerlingen</p>
-                    </div>
-                    <div class="pricing-body">
-                        <ul class="pricing-features">
-                            <li><i class="fas fa-check"></i> Diepgaande conversatie</li>
-                            <li><i class="fas fa-check"></i> Uitgebreide grammatica</li>
-                            <li><i class="fas fa-check"></i> Cultuur & actualiteiten</li>
-                            <li><i class="fas fa-check"></i> Persoonlijke feedback</li>
-                            <li><i class="fas fa-check"></i> Examenvoorbereiding</li>
-                        </ul>
-                        <a href="#contact" class="btn" style="width: 100%;"><i class="fas fa-info-circle"></i> Meer
-                            Informatie</a>
-                    </div>
-                </div>
-
-                <div class="pricing-card fade-in-on-scroll">
-                    <div class="pricing-header">
-                        <h3><i class="fas fa-bolt" style="margin-right: 10px;"></i> Intensief</h3>
-                        <div class="price">€20/uur</div>
-                        <p>Spoedcursus of specifieke doelen</p>
-                    </div>
-                    <div class="pricing-body">
-                        <ul class="pricing-features">
-                            <li><i class="fas fa-check"></i> Versnelde leercurve</li>
-                            <li><i class="fas fa-check"></i> Volledig op maat gemaakt</li>
-                            <li><i class="fas fa-check"></i> Specifieke thema's (bv. vakantie)</li>
-                            <li><i class="fas fa-check"></i> Extra oefenmateriaal</li>
-                            <li><i class="fas fa-check"></i> Voorbereiding op specifieke situaties</li>
-                        </ul>
-                        <a href="#contact" class="btn" style="width: 100%;"><i class="fas fa-calendar-alt"></i> Plan
-                            Intakegesprek</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pricing Explanation -->
-            <div class="pricing-explanation fade-in-on-scroll">
-                <h3><i class="fas fa-euro-sign" style="color: var(--secondary); margin-right: 10px;"></i> Waarom deze
-                    tarieven?</h3>
-                <p>Mijn tarieven zijn transparant en bieden uitstekende waarde voor wat je krijgt:</p>
-                <ul>
-                    <li><strong>Persoonlijke aandacht:</strong> Geen grote groepen, alleen één-op-één begeleiding voor
-                        optimale leerresultaten.</li>
-                    <li><strong>Kwaliteitsmaterialen:</strong> Alle lesmaterialen zijn inbegrepen - geen extra kosten
-                        voor boeken of online tools.</li>
-                    <li><strong>Flexibiliteit:</strong> Lessen op maat, aangepast aan jouw schema en leertempo.</li>
-                    <li><strong>Native speaker kwaliteit:</strong> Je leert authentiek Spaans met de juiste uitspraak en
-                        culturele context.</li>
-                    <li><strong>Jonge & moderne aanpak:</strong> Ik gebruik actuele en relevante materialen die
-                        aansluiten bij de belevingswereld van kinderen, tieners en jongvolwassenen.</li>
-                </ul>
-
-                <h3><i class="fas fa-gift" style="color: var(--accent); margin-right: 10px;"></i> Wat zit er allemaal
-                    inbegrepen?</h3>
-                <ul>
-                    <li><i class="fas fa-book" style="color: var(--secondary); margin-right: 8px;"></i> Persoonlijk
-                        lesplan op maat</li>
-                    <li><i class="fas fa-file-alt" style="color: var(--secondary); margin-right: 8px;"></i> Alle
-                        benodigde lesmaterialen (werkbladen, online bronnen, audiomateriaal)</li>
-                    <li><i class="fas fa-calendar" style="color: var(--secondary); margin-right: 8px;"></i> Flexibele
-                        planning en locatie (bij jou thuis, bij mij of online)</li>
-                    <li><i class="fas fa-comment" style="color: var(--secondary); margin-right: 8px;"></i> Persoonlijke
-                        feedback en voortgangsevaluaties</li>
-                    <li><i class="fab fa-whatsapp" style="color: var(--secondary); margin-right: 8px;"></i>
-                        Ondersteuning tussen lessen door (WhatsApp voor vragen)</li>
-                    <li><i class="fas fa-star" style="color: var(--secondary); margin-right: 8px;"></i> Gratis proefles
-                        van 30 minuten</li>
-                    <li><i class="fas fa-percentage" style="color: var(--secondary); margin-right: 8px;"></i> 10%
-                        korting bij afname van een pakket van 5 lessen</li>
-                </ul>
-
-                <p><strong>Transparante prijzen:</strong> Alle prijzen zijn per uur. Bij afname van een pakket van 5
-                    lessen krijg je 10% korting. Eerste proefles (30 minuten) is altijd gratis en vrijblijvend.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- For Whom Section -->
-    <section id="voor-wie">
-        <div class="container">
-            <div class="section-header fade-in-on-scroll">
-                <h2>Voor Wie Zijn De Lessen?</h2>
-            </div>
-            <div class="audience-grid">
-                <div class="audience-card fade-in-on-scroll">
-                    <div class="audience-icon">
-                        <i class="fas fa-child"></i>
-                    </div>
-                    <h3>Kinderen (8-12 jaar)</h3>
-                    <p>Spelenderwijs Spaans leren met liedjes, spelletjes en creatieve activiteiten. Perfect voor een
-                        vroege start met taalverwerving.</p>
-                </div>
-                <div class="audience-card fade-in-on-scroll">
-                    <div class="audience-icon">
-                        <i class="fas fa-user-graduate"></i>
-                    </div>
-                    <h3>Scholieren (13-18 jaar)</h3>
-                    <p>Schoolondersteuning, examenvoorbereiding of persoonlijke interesse. Lessen die aansluiten bij hun
-                        leefwereld en interesses.</p>
-                </div>
-                <div class="audience-card fade-in-on-scroll">
-                    <div class="audience-icon">
-                        <i class="fas fa-user-friends"></i>
-                    </div>
-                    <h3>Jongvolwassenen</h3>
-                    <p>Voor studie, werk, reizen of persoonlijke ontwikkeling. Moderne onderwerpen en praktische
-                        toepassingen.</p>
-                </div>
-                <div class="audience-card fade-in-on-scroll">
-                    <div class="audience-icon">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <h3>Conversatie & Vloeiendheid</h3>
-                    <p>Voor iedereen die de basis kent maar meer zelfvertrouwen wil krijgen in het spreken. Focus op
-                        natuurlijke communicatie.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-header fade-in-on-scroll">
-                <h2>Veelgestelde Vragen</h2>
-            </div>
-            <div class="faq-container">
-                <div class="faq-item fade-in-on-scroll">
-                    <div class="faq-question">
-                        <span><i class="fas fa-map-marker-alt" style="margin-right: 10px; color: var(--primary);"></i>
-                            Waar vinden de lessen plaats?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Ik geef lessen in Sint Willebrord en omgeving. Lessen kunnen bij jou thuis plaatsvinden, bij
-                            mij thuis (in overleg), of online via videogesprek. Ik kom ook naar andere plaatsen in de
-                            regio, eventueel tegen een kleine reiskostenvergoeding.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item fade-in-on-scroll">
-                    <div class="faq-question">
-                        <span><i class="fas fa-gift" style="margin-right: 10px; color: var(--primary);"></i> Is een
-                            proefles echt gratis?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Ja! De kennismakingsles van 30 minuten is volledig gratis en vrijblijvend. We leren elkaar
-                            kennen, bespreken jouw doelen en kijken of we een match zijn. Pas daarna besluit je of je
-                            verder wilt.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item fade-in-on-scroll">
-                    <div class="faq-question">
-                        <span><i class="fas fa-calendar" style="margin-right: 10px; color: var(--primary);"></i> Hoe
-                            vaak moet ik lessen nemen?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Dit is volledig flexibel. De meeste leerlingen nemen één les per week, maar je kunt ook
-                            kiezen voor twee keer per week of eens per twee weken. We bepalen samen wat het beste bij
-                            jouw doelen en beschikbaarheid past.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item fade-in-on-scroll">
-                    <div class="faq-question">
-                        <span><i class="fas fa-times-circle" style="margin-right: 10px; color: var(--primary);"></i> Wat
-                            als ik een les moet annuleren?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Annuleringen kunnen kosteloos tot 24 uur van tevoren. Bij latere annulering breng ik 50% van
-                            het lesgeld in rekening. Dit beleid zorgt voor duidelijkheid para ons beiden.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item fade-in-on-scroll">
-                    <div class="faq-question">
-                        <span><i class="fas fa-book" style="margin-right: 10px; color: var(--primary);"></i> Moet ik
-                            lesmateriaal kopen?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Nee, ik zorg voor al het benodigde lesmateriaal. Dit kan bestaan uit werkbladen, online
-                            bronnen, audiomateriaal en andere moderne leermiddelen. Alle kosten zijn inbegrepen in de
-                            lesprijs.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item fade-in-on-scroll">
-                    <div class="faq-question">
-                        <span><i class="fas fa-euro-sign" style="margin-right: 10px; color: var(--primary);"></i> Waarom
-                            zijn je tarieven lager dan bij andere taalscholen?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Als startende ondernemer kan ik mijn tarieven scherp houden. Ik heb geen grote overheadkosten
-                            en kan me volledig richten op het geven van kwaliteitslessen. Mijn tarieven zijn bewust
-                            betaalbaar gehouden, speciaal voor leerlingen en studenten. Dit betekent niet dat de
-                            kwaliteit lager is - je krijgt juist meer persoonlijke aandacht!</p>
-                    </div>
-                </div>
-
-                <div class="faq-item fade-in-on-scroll">
-                    <div class="faq-question">
-                        <span><i class="fas fa-chart-line" style="margin-right: 10px; color: var(--primary);"></i> Hoe
-                            meet je mijn voortgang?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Ik gebruik verschillende methoden: regelmatige evaluatiegesprekken, praktische opdrachten,
-                            en informele checks tijdens lessen. Ik pas mijn aanpak continu aan op basis van je
-                            voortgang en feedback. Voor schoolleerlingen kan ik ook specifiek oefenen met
-                            examenvoorbereiding.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Trust Section -->
-    <section>
-        <div class="container">
-            <div class="section-header fade-in-on-scroll">
-                <h2>Waarom Kiezen Voor Markstein Language Studio?</h2>
-            </div>
-            <div class="trust-elements">
-                <div class="trust-card fade-in-on-scroll">
-                    <i class="fas fa-user-check"></i>
-                    <h3>Echte Native Speaker</h3>
-                    <p>Ik spreek Spaans als moedertaal, maar begrijp ook de Nederlandse taal en cultuur perfect. Dit
-                        maakt uitleg begrijpelijker.</p>
-                </div>
-                <div class="trust-card fade-in-on-scroll">
-                    <i class="fas fa-heart"></i>
-                    <h3>Persoonlijke Aandacht</h3>
-                    <p>Als nieuwe dienstverlener kan ik mijn volledige aandacht aan elke leerling geven. Geen grote
-                        groepen, alleen persoonlijke begeleiding.</p>
-                </div>
-                <div class="trust-card fade-in-on-scroll">
-                    <i class="fas fa-graduation-cap"></i>
-                    <h3>Jonge & Moderne Aanpak</h3>
-                    <p>Mijn leeftijd betekent dat ik een frisse, moderne benadering heb die goed aansluit bij kinderen,
-                        tieners en jonge volwassenen.</p>
-                </div>
-                <div class="trust-card fade-in-on-scroll">
-                    <i class="fas fa-euro-sign"></i>
-                    <h3>Betaalbaar & Transparant</h3>
-                    <p>Duidelijke tarieven zonder verborgen kosten. Kwaliteit tegen een betaalbare prijs, speciaal voor
-                        leerlingen en estudiantes.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container fade-in">
-            <h2>Klaar om Spaans te Leren?</h2>
-            <p>Neem vandaag nog contact op voor een gratis kennismakingsles. Samen bespreken we jouw doelen en maken we
-                een plan op maat.</p>
-            <a href="#contact" class="btn"><i class="fas fa-flag-checkered"></i> Ja, ik wil een gratis proefles!</a>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <div class="section-header fade-in-on-scroll">
-                <h2>Contact</h2>
-            </div>
-            <div class="contact-container">
-                <div class="contact-info fade-in-on-scroll">
-                    <h3><i class="fas fa-envelope-open-text" style="color: var(--primary); margin-right: 10px;"></i>
-                        Neem Contact Op</h3>
-                    <p>Heb je vragen over de lessen, tarieven of beschikbaarheid? Stuur me gerust een bericht. Ik
-                        reageer meestal binnen 24 uur.</p>
-
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <h4>Locatie</h4>
-                            <p><strong>Sint Willebrord, Nederland</strong></p>
-                            <p>Lessen in Sint Willebrord en omgeving mogelijk</p>
-                        </div>
-                    </div>
-
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h4>Email</h4>
-                            <p>info@marksteinlanguagestudio.nl</p>
-                        </div>
-                    </div>
-
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <h4>Telefoon & WhatsApp</h4>
-                            <p>+31 6 15893105</p>
-                            <p>Beschikbaar op maandag t/m vrijdag van 15:00 tot 20:00</p>
-                        </div>
-                    </div>
-
-                    <div class="social-links">
-                        <a href="https://wa.me/31615893105" target="_blank" aria-label="WhatsApp"><i
-                                class="fab fa-whatsapp"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="#" aria-label="Messenger"><i class="fab fa-facebook-messenger"></i></a>
-                    </div>
-                </div>
-
-                <div class="contact-form fade-in-on-scroll">
-                    <h3><i class="fas fa-paper-plane" style="color: var(--primary); margin-right: 10px;"></i> Stuur een
-                        Bericht</h3>
-                    <!-- Formulario conectado a Formspree -->
-                    <form action="https://formspree.io/f/xgvnpjpp" method="POST" id="contactForm">
-                        <div class="form-group">
-                            <label for="name"><i class="fas fa-user" style="margin-right: 8px; color: var(--gray);"></i>
-                                Naam *</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email"><i class="fas fa-envelope"
-                                    style="margin-right: 8px; color: var(--gray);"></i> Email *</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone"><i class="fas fa-phone"
-                                    style="margin-right: 8px; color: var(--gray);"></i> Telefoonnummer</label>
-                            <input type="tel" id="phone" name="phone" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="subject"><i class="fas fa-tag"
-                                    style="margin-right: 8px; color: var(--gray);"></i> Onderwerp *</label>
-                            <select id="subject" name="subject" class="form-control" required>
-                                <option value="">Kies een optie</option>
-                                <option value="proefles">Gratis proefles aanvragen</option>
-                                <option value="informatie">Meer informatie over lessen</option>
-                                <option value="tarieven">Vraag over tarieven</option>
-                                <option value="anders">Anders</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message"><i class="fas fa-comment"
-                                    style="margin-right: 8px; color: var(--gray);"></i> Bericht *</label>
-                            <textarea id="message" name="message" class="form-control"
-                                placeholder="Vertel me over je Spaans niveau en wat je wilt leren..."
-                                required></textarea>
-                        </div>
-
-                        <button type="submit" class="btn" style="width: 100%;"><i class="fas fa-paper-plane"></i>
-                            Verstuur Bericht</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column fade-in-on-scroll">
-                    <h3><i class="fas fa-comments" style="margin-right: 10px;"></i> Markstein Language Studio</h3>
-                    <p>Persoonlijke Spaanse lessen met een jonge native speaker in Sint Willebrord. Frisse, moderne
-                        aanpak voor kinderen, tieners en jongvolwassenen.</p>
-                    <div class="social-links">
-                        <a href="https://wa.me/31615893105" target="_blank" aria-label="WhatsApp"><i
-                                class="fab fa-whatsapp"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                    </div>
-                </div>
-
-                <div class="footer-column fade-in-on-scroll">
-                    <h3><i class="fas fa-link" style="margin-right: 10px;"></i> Snelle Links</h3>
-                    <a href="#home"><i class="fas fa-chevron-right" style="margin-right: 8px;"></i> Home</a>
-                    <a href="#over-mij"><i class="fas fa-chevron-right" style="margin-right: 8px;"></i> Over Mij</a>
-                    <a href="#werkwijze"><i class="fas fa-chevron-right" style="margin-right: 8px;"></i> Mijn
-                        Werkwijze</a>
-                    <a href="#waarom"><i class="fas fa-chevron-right" style="margin-right: 8px;"></i> Waarom Spaans?</a>
-                    <a href="#lessen"><i class="fas fa-chevron-right" style="margin-right: 8px;"></i> Lessen</a>
-                    <a href="#tarieven"><i class="fas fa-chevron-right" style="margin-right: 8px;"></i> Tarieven</a>
-                    <a href="#contact"><i class="fas fa-chevron-right" style="margin-right: 8px;"></i> Contact</a>
-                </div>
-
-                <div class="footer-column fade-in-on-scroll">
-                    <h3><i class="fas fa-graduation-cap" style="margin-right: 10px;"></i> Diensten</h3>
-                    <a href="#voor-wie"><i class="fas fa-chevron-right" style="margin-right: 8px;"></i> Spaans voor
-                        kinderen</a>
-                    <a href="#voor-wie"><i class="fas fa-chevron-right" style="margin-right: 8px;"></i> Spaans voor
-                        scholieren</a>
-                    <a href="#voor-wie"><i class="fas fa-chevron-right" style="margin-right: 8px;"></i> Spaans voor
-                        jongvolwassenen</a>
-                    <a href="#voor-wie"><i class="fas fa-chevron-right" style="margin-right: 8px;"></i>
-                        Conversatielessen</a>
-                    <a href="#tarieven"><i class="fas fa-chevron-right" style="margin-right: 8px;"></i>
-                        Examenvoorbereiding</a>
-                </div>
-
-                <div class="footer-column fade-in-on-scroll">
-                    <h3><i class="fas fa-address-card" style="margin-right: 10px;"></i> Contact</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Sint Willebrord, Nederland</p>
-                    <p><i class="fas fa-phone"></i> +31 6 15893105</p>
-                    <p><i class="fas fa-envelope"></i> info@marksteinlanguagestudio.nl</p>
-                </div>
-            </div>
-
-            <div class="copyright fade-in-on-scroll">
-                <p>&copy; 2023 Markstein Language Studio - Privélessen Spaans in Sint Willebrord. Alle rechten
-                    voorbehouden.</p>
-                <p>KVK-nummer: binnenkort beschikbaar | BTW-id: niet van toepassing</p>
-            </div>
-        </div>
-    </footer>
+        <div class="options-grid" id="grid"></div>
+    </div>
 
     <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
-        const body = document.body;
+        // Vocabulario seleccionado de las lecciones 
+        const lessons = [
+            { es: "Hola", nl: "Hallo", emoji: "👋" },
+            { es: "Rojo", nl: "Rood", emoji: "🍎" },
+            { es: "Azul", nl: "Blauw", emoji: "🦋" },
+            { es: "Amarillo", nl: "Geel", emoji: "☀️" },
+            { es: "Uno", nl: "Eén", emoji: "🍦" },
+            { es: "Dos", nl: "Twee", emoji: "🍒" },
+            { es: "Tres", nl: "Drie", emoji: "🐥" },
+            { es: "Mamá", nl: "Mama", emoji: "👩" },
+            { es: "Papá", nl: "Papa", emoji: "👨" },
+            { es: "Perro", nl: "Hond", emoji: "🐶" },
+            { es: "Gato", nl: "Kat", emoji: "🐱" },
+            { es: "Casa", nl: "Huis", emoji: "🏠" },
+            { es: "Manzana", nl: "Appel", emoji: "🍎" },
+            { es: "Agua", nl: "Water", emoji: "💧" },
+            { es: "Leche", nl: "Melk", emoji: "🥛" },
+            { es: "Pan", nl: "Brood", emoji: "🍞" }
+        ];
 
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active')
-                ? '<i class="fas fa-times"></i>'
-                : '<i class="fas fa-bars"></i>';
-        });
+        let current = null;
+        let score = 0;
+        let completed = 0;
 
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                body.style.overflow = 'auto';
-                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        function startGame() {
+            if (completed >= lessons.length) {
+                alert("Goed gedaan! Je bent een ster! 🌟");
+                completed = 0; score = 0;
+                document.getElementById('points').innerText = score;
+            }
+
+            current = lessons[Math.floor(Math.random() * lessons.length)];
+            document.getElementById('target-word').innerText = current.es;
+
+            let options = [current];
+            while (options.length < 4) {
+                let rand = lessons[Math.floor(Math.random() * lessons.length)];
+                if (!options.includes(rand)) options.push(rand);
+            }
+            options.sort(() => Math.random() - 0.5);
+
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            options.forEach(opt => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `<span class="emoji">${opt.emoji}</span><span class="label">${opt.nl}</span>`;
+                card.onclick = () => check(opt, card);
+                grid.appendChild(card);
             });
-        });
 
-        // FAQ accordion
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const item = question.parentElement;
-                item.classList.toggle('active');
-            });
-        });
+            playVoice();
+        }
 
-        // Form submission
-        const contactForm = document.getElementById('contactForm');
+        function playVoice() {
+            const msg = new SpeechSynthesisUtterance(current.es);
+            msg.lang = 'es-ES';
+            msg.rate = 0.7;
+            msg.pitch = 1.2; // Voz un poco más infantil/aguda
+            window.speechSynthesis.speak(msg);
+        }
 
-        // Manejo del envío del formulario a Formspree
-        contactForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
+        function check(selected, el) {
+            if (selected.es === current.es) {
+                score += 10;
+                completed++;
+                el.classList.add('correct-anim');
+                document.getElementById('points').innerText = score;
+                document.getElementById('progress').style.width = (completed / lessons.length * 100) + "%";
 
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-
-            // Mostrar estado de envío
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verzenden...';
-            submitBtn.disabled = true;
-
-            try {
-                // Enviar formulario a Formspree
-                const formData = new FormData(contactForm);
-                const response = await fetch('https://formspree.io/f/xgvnpjpp', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
+                confetti({
+                    particleCount: 80,
+                    spread: 50,
+                    origin: { y: 0.7 },
+                    colors: ['#90CAF9', '#FCE4EC', '#FFF9C4']
                 });
 
-                if (response.ok) {
-                    // Éxito
-                    alert(`Bedankt ${name}! Je bericht over "${subject}" is succesvol verzonden. Ik neem zo snel mogelijk contact met je op via ${email}.`);
-                    contactForm.reset();
-                } else {
-                    // Error
-                    alert('Er is een fout opgetreden bij het verzenden van je bericht. Probeer het opnieuw of neem direct contact op via WhatsApp.');
-                }
-            } catch (error) {
-                // Error de red
-                alert('Er is een netwerkfout opgetreden. Probeer het opnieuw of neem direct contact op via WhatsApp.');
-                console.error('Form submission error:', error);
-            } finally {
-                // Restaurar botón
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Sticky header background on scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.backgroundColor = 'rgba(255, 255, 255, 0.97)';
-                header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
+                setTimeout(startGame, 1200);
             } else {
-                header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
-                header.style.boxShadow = 'var(--shadow)';
+                el.classList.add('error-anim');
+                setTimeout(() => el.classList.remove('error-anim'), 400);
             }
-        });
+        }
 
-        // Animación al hacer scroll
-        const fadeInElements = document.querySelectorAll('.fade-in-on-scroll');
-
-        const fadeInOnScroll = () => {
-            fadeInElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
-
-                if (elementTop < window.innerHeight - elementVisible) {
-                    element.classList.add('visible');
-                }
-            });
-        };
-
-        // Verificar al cargar y al hacer scroll
-        window.addEventListener('scroll', fadeInOnScroll);
-        window.addEventListener('load', fadeInOnScroll);
-
-        // Verificar inicialmente
-        fadeInOnScroll();
-
-        // Mejorar experiencia táctil en móviles
-        document.addEventListener('touchstart', function () { }, { passive: true });
-
-        // Prevenir zoom en inputs en iOS
-        document.addEventListener('touchmove', function (e) {
-            if (e.scale !== 1) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
-        // Mejorar accesibilidad para móviles
-        document.querySelectorAll('input, textarea, select, button').forEach(el => {
-            el.addEventListener('focus', () => {
-                el.style.outline = '2px solid var(--primary)';
-                el.style.outlineOffset = '2px';
-            });
-
-            el.addEventListener('blur', () => {
-                el.style.outline = 'none';
-            });
-        });
-
-        // Cerrar menú al hacer scroll en móvil
-        let scrollTimer;
-        window.addEventListener('scroll', () => {
-            if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
-                clearTimeout(scrollTimer);
-                scrollTimer = setTimeout(() => {
-                    navLinks.classList.remove('active');
-                    body.style.overflow = 'auto';
-                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                }, 100);
-            }
-        });
-
-        // Prevenir scroll cuando el menú está abierto
-        navLinks.addEventListener('touchmove', (e) => {
-            if (navLinks.classList.contains('active')) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
-        // Mejorar el tamaño de los botones para toques
-        document.querySelectorAll('.btn, .social-links a').forEach(button => {
-            button.addEventListener('touchstart', function () {
-                this.style.transform = 'scale(0.98)';
-            });
-
-            button.addEventListener('touchend', function () {
-                this.style.transform = '';
-            });
-        });
+        startGame();
     </script>
+
 </body>
 
 </html>
