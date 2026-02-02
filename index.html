@@ -3,303 +3,874 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Mijn Spaanse Vriendje ☁️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Nunito:wght@400;700&display=swap"
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="NØMADIC | Spaans Leren - Powered by Webnox">
+    <meta name="theme-color" content="#050505">
+
+    <title>NØMADIC | Spaans Masterclass</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Space+Grotesk:wght@300;500;700;900&display=swap"
         rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        /* --- CSS VARIABLES & THEME SETUP --- */
         :root {
-            --soft-blue: #E3F2FD;
-            --soft-pink: #FCE4EC;
-            --soft-yellow: #FFF9C4;
-            --soft-green: #E8F5E9;
-            --text-color: #5C677D;
-            --accent: #90CAF9;
+            /* ADULT THEME */
+            --a-bg: #050505;
+            --a-surface: #121212;
+            --a-surface-hover: #1E1E1E;
+            --a-primary: #CCFF00;
+            --a-secondary: #00F0FF;
+            --a-text: #Eaeaea;
+            --a-border: rgba(255, 255, 255, 0.08);
+
+            /* KID THEME */
+            --k-bg: #F0F4F8;
+            --k-surface: #FFFFFF;
+            --k-primary: #FF6B6B;
+            --k-secondary: #4ECDC4;
+            --k-accent: #FFD93D;
+            --k-text: #2D3436;
+            --k-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+
+            /* SHARED */
+            --radius-xl: 24px;
+            --radius-md: 16px;
+            --max-width: 900px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* --- GLOBAL RESET --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            user-select: none;
         }
 
         body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--a-bg);
+            color: var(--a-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 90px;
+            /* Space for navbar */
+        }
+
+        /* --- SCROLLBAR --- */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        /* --- MODE STYLES --- */
+        /* ADULT */
+        body[data-mode="adult"] {
+            background: var(--a-bg);
+        }
+
+        body[data-mode="adult"] .glass {
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid var(--a-border);
+        }
+
+        body[data-mode="adult"] .btn-primary {
+            background: var(--a-primary);
+            color: #000;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(204, 255, 0, 0.3);
+            border-radius: 8px;
+        }
+
+        /* KID */
+        body[data-mode="kid"] {
             font-family: 'Nunito', sans-serif;
-            background-color: var(--soft-blue);
-            margin: 0;
+            background: var(--k-bg);
+            color: var(--k-text);
+            background-image: radial-gradient(var(--k-secondary) 10%, transparent 10%), radial-gradient(var(--k-primary) 10%, transparent 10%);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+
+        body[data-mode="kid"] .glass {
+            background: white;
+            border-top: 2px solid #eee;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        body[data-mode="kid"] .btn-primary {
+            background: var(--k-primary);
+            color: white;
+            border-radius: 50px;
+            border-bottom: 5px solid #d63031;
+        }
+
+        body[data-mode="kid"] .btn-primary:active {
+            border-bottom-width: 0;
+            transform: translateY(5px);
+        }
+
+        /* --- COMPONENTS --- */
+        .app-container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- NAVIGATION --- */
+        .navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+            padding-bottom: 10px;
+        }
+
+        .nav-item {
+            opacity: 0.5;
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
-            color: var(--text-color);
+            gap: 5px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-item i {
+            font-size: 1.5rem;
+        }
+
+        .nav-item span {
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .nav-item.active {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+
+        body[data-mode="adult"] .nav-item.active {
+            color: var(--a-primary);
+        }
+
+        body[data-mode="kid"] .nav-item.active {
+            color: var(--k-primary);
+        }
+
+        /* --- DASHBOARD --- */
+        .user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        body[data-mode="adult"] .stat-card {
+            background: var(--a-surface-hover);
+            border: 1px solid var(--a-border);
+        }
+
+        body[data-mode="kid"] .stat-card {
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- GRID --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            padding: 15px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 140px;
+            transition: 0.2s;
+        }
+
+        /* Adult Card */
+        body[data-mode="adult"] .card {
+            background: var(--a-surface);
+            border: 1px solid var(--a-border);
+        }
+
+        body[data-mode="adult"] .card:active {
+            border-color: var(--a-primary);
+            transform: scale(0.98);
+        }
+
+        /* Kid Card */
+        body[data-mode="kid"] .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 0 #eee;
+        }
+
+        body[data-mode="kid"] .card:active {
+            transform: translateY(5px);
+            box-shadow: 0 0 0 #eee;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .check-mark {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            color: #2ecc71;
+            opacity: 0;
+            font-size: 0.8rem;
+        }
+
+        .card.done .check-mark {
+            opacity: 1;
+        }
+
+        /* --- ACTIVITY VIEW (OVERLAY) --- */
+        #activity-view {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            z-index: 2000;
+            /* SUPER HIGH Z-INDEX TO FIX ACCESS */
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .game-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .progress-container {
+            flex: 1;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
             overflow: hidden;
         }
 
-        /* Decoración infantil */
-        .cloud {
-            position: absolute;
-            background: white;
-            border-radius: 100px;
-            opacity: 0.6;
-            z-index: -1;
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #2ecc71;
+            transition: 0.3s;
         }
 
-        /* Cabecera suave */
-        .top-bar {
-            width: 100%;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .score-pill {
-            background: white;
-            padding: 8px 25px;
-            border-radius: 30px;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            color: #90CAF9;
-        }
-
-        /* Área de juego */
-        .game-area {
+        .game-body {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 90%;
-            max-width: 1000px;
-        }
-
-        .instruction {
-            font-size: 1.4rem;
-            margin-bottom: 25px;
-            color: #7E8C9F;
-        }
-
-        /* Palabra principal (Estilo Nube) */
-        .word-bubble {
-            background: white;
-            padding: 40px 70px;
-            border-radius: 60px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            margin-bottom: 50px;
-            border: 4px solid #F1F8FF;
-        }
-
-        .word-bubble:hover {
-            transform: scale(1.02);
-        }
-
-        .word-bubble h1 {
-            font-family: 'Fredoka', cursive;
-            font-size: 4.5rem;
-            margin: 0;
-            color: #7BB8FA;
-            letter-spacing: 2px;
-        }
-
-        .audio-hint {
-            font-size: 1rem;
-            color: #B0BEC5;
-            display: block;
-            margin-top: 10px;
-        }
-
-        /* Opciones cuadradas pero muy redondeadas */
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
             width: 100%;
         }
 
-        .card {
-            background: white;
-            border-radius: 35px;
-            padding: 20px;
+        /* --- FLASHCARDS & OPTIONS --- */
+        .flashcard {
+            width: 100%;
+            padding: 40px 20px;
+            border-radius: 20px;
             text-align: center;
-            cursor: pointer;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.03);
-            transition: all 0.2s ease;
-            border: 3px solid transparent;
+            margin-bottom: 30px;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            background: var(--soft-yellow);
+        body[data-mode="adult"] .flashcard {
+            background: #1a1a1a;
+            border: 1px solid #333;
         }
 
-        .card .emoji {
-            font-size: 3.5rem;
-            display: block;
-            margin-bottom: 5px;
+        body[data-mode="kid"] .flashcard {
+            background: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
         }
 
-        .card .label {
+        .btn-opt {
+            width: 100%;
+            padding: 18px;
+            margin-bottom: 10px;
+            border-radius: 12px;
             font-size: 1.1rem;
-            color: #9DA9BB;
-            font-weight: 600;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: 0.2s;
         }
 
-        /* Efectos */
-        .correct-anim {
-            border-color: #A5D6A7 !important;
-            background: #F1F8E9 !important;
+        body[data-mode="adult"] .btn-opt {
+            background: #222;
+            color: #fff;
+            border: 1px solid #333;
         }
 
-        .error-anim {
-            animation: wobble 0.4s;
-            border-color: #EF9A9A !important;
+        body[data-mode="adult"] .btn-opt:active {
+            border-color: var(--a-primary);
         }
 
-        @keyframes wobble {
-            0% {
-                transform: translateX(0);
-            }
-
-            25% {
-                transform: translateX(-5px);
-            }
-
-            75% {
-                transform: translateX(5px);
-            }
-
-            100% {
-                transform: translateX(0);
-            }
+        body[data-mode="kid"] .btn-opt {
+            background: white;
+            color: var(--k-text);
+            border: 2px solid #f0f0f0;
         }
 
-        .progress-track {
+        body[data-mode="kid"] .btn-opt:active {
+            border-color: var(--k-primary);
+            background: #fff5f5;
+        }
+
+        .btn-opt.correct {
+            background: #2ecc71 !important;
+            color: white !important;
+            border-color: #27ae60 !important;
+        }
+
+        .btn-opt.wrong {
+            background: #e74c3c !important;
+            color: white !important;
+            border-color: #c0392b !important;
+        }
+
+        /* --- SPLASH --- */
+        #splash {
+            position: fixed;
+            inset: 0;
+            z-index: 5000;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s;
+        }
+
+        .mode-btn {
             width: 200px;
-            height: 10px;
-            background: #E0E0E0;
-            border-radius: 10px;
-            overflow: hidden;
+            padding: 25px;
+            margin: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-align: center;
+            border: 2px solid transparent;
         }
 
-        .progress-bar {
-            height: 100%;
-            background: #90CAF9;
-            width: 0%;
-            transition: width 0.5s;
+        /* --- PROFILE --- */
+        .profile-container {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            background: #eee;
+        }
+
+        body[data-mode="adult"] .avatar {
+            background: linear-gradient(135deg, var(--a-primary), var(--a-secondary));
+            color: black;
+        }
+
+        .webnox-badge {
+            margin-top: 40px;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+
+        .webnox-badge:hover {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        body[data-mode="adult"] .webnox-badge {
+            border: 1px solid #333;
+            color: #888;
+            background: #111;
+        }
+
+        body[data-mode="kid"] .webnox-badge {
+            border: 2px dashed #ddd;
+            color: #888;
+            background: #fff;
         }
     </style>
 </head>
 
-<body>
+<body data-mode="adult">
 
-    <div class="cloud" style="top:10%; left:10%; width:150px; height:60px;"></div>
-    <div class="cloud" style="top:20%; right:15%; width:200px; height:80px;"></div>
-    <div class="cloud" style="bottom:15%; left:20%; width:120px; height:50px;"></div>
+    <div id="splash">
+        <h1 style="color:white; font-size: 3rem; margin-bottom: 10px; letter-spacing: -2px;">NØMADIC</h1>
+        <p style="color:#666; margin-bottom: 40px; letter-spacing: 2px;">SPAANS LEREN</p>
 
-    <div class="top-bar">
-        <div class="score-pill">✨ <span id="points">0</span></div>
-        <div class="progress-track">
-            <div class="progress-bar" id="progress"></div>
+        <div class="mode-btn" style="background: white; color: #333;" onclick="initApp('kid')">
+            <i class="fas fa-shapes fa-2x" style="color: #FF6B6B;"></i>
+            <h3>KIDS</h3>
         </div>
-        <div style="font-weight: 600; color: #90CAF9;">Mijn Spaanse Vriendje</div>
+        <div class="mode-btn" style="background: #111; color: white; border: 1px solid #333;"
+            onclick="initApp('adult')">
+            <i class="fas fa-fingerprint fa-2x" style="color: #CCFF00;"></i>
+            <h3>URBAN</h3>
+        </div>
     </div>
 
-    <div class="game-area">
-        <div class="instruction">Luister en kies het juiste plaatje:</div>
+    <div id="app" class="hidden">
 
-        <div class="word-bubble" onclick="playVoice()">
-            <h1 id="target-word">...</h1>
-            <span class="audio-hint">Klik om te horen 🔊</span>
+        <div id="view-dashboard" class="app-container fade-in">
+            <div class="user-header">
+                <div>
+                    <h2 id="greeting">Hola!</h2>
+                    <p style="opacity:0.6; font-size:0.9rem;">Kies een les / Selecciona lección</p>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <div class="stat-card">
+                        <i class="fas fa-fire" style="color: #ff7675;"></i> <span id="streak">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-star" style="color: gold;"></i> <span id="score">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="grid" id="lesson-grid"></div>
         </div>
 
-        <div class="options-grid" id="grid"></div>
+        <div id="view-profile" class="app-container hidden fade-in">
+            <div class="profile-container">
+                <div class="avatar"><i class="fas fa-user-astronaut"></i></div>
+                <h2 id="profile-name">Student</h2>
+                <p style="opacity:0.5;">Lid sinds 2026</p>
+                <br>
+                <div style="text-align:left; margin-top:20px;">
+                    <p>Totale XP: <strong id="total-xp">0</strong></p>
+                    <div style="background:rgba(0,0,0,0.1); height:10px; border-radius:5px; margin-top:5px;">
+                        <div id="xp-bar" style="height:100%; width:0%; background:#2ecc71; border-radius:5px;"></div>
+                    </div>
+                </div>
+                <br>
+                <button onclick="localStorage.clear(); location.reload()" class="btn-opt"
+                    style="color:#e74c3c; border-color:#e74c3c; margin-top:20px;">
+                    RESET PROGRESS
+                </button>
+
+                <a href="https://webnox.online" target="_blank" class="webnox-badge">
+                    <div style="font-size:0.7rem; text-transform:uppercase; letter-spacing:1px;">Developed by</div>
+                    <div style="font-weight:900; font-size:1.2rem;">WEBNOX.ONLINE</div>
+                </a>
+            </div>
+        </div>
+
     </div>
+
+    <div id="activity-view" class="hidden">
+        <div class="game-header">
+            <button onclick="closeActivity()"
+                style="background:none; border:none; font-size:1.5rem; color:inherit; cursor:pointer;">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="progress-container">
+                <div id="game-progress" class="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="game-body fade-in">
+            <h2 id="lesson-title" style="margin-bottom:20px; opacity:0.7;">Title</h2>
+
+            <div id="game-engine" style="width:100%;"></div>
+
+            <div id="feedback" style="height:30px; margin:20px 0; font-weight:bold; text-align:center;"></div>
+
+            <button id="next-btn" class="btn-primary hidden"
+                style="width:100%; padding:20px; border:none; font-size:1.1rem; cursor:pointer;">
+                VOLGENDE / CONTINUAR
+            </button>
+        </div>
+    </div>
+
+    <nav class="navbar glass hidden" id="main-nav">
+        <div class="nav-item active" onclick="switchTab('dashboard')">
+            <i class="fas fa-layer-group"></i> <span>Lessen</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('profile')">
+            <i class="fas fa-user"></i> <span>Profiel</span>
+        </div>
+    </nav>
 
     <script>
-        // Vocabulario seleccionado de las lecciones 
-        const lessons = [
-            { es: "Hola", nl: "Hallo", emoji: "👋" },
-            { es: "Rojo", nl: "Rood", emoji: "🍎" },
-            { es: "Azul", nl: "Blauw", emoji: "🦋" },
-            { es: "Amarillo", nl: "Geel", emoji: "☀️" },
-            { es: "Uno", nl: "Eén", emoji: "🍦" },
-            { es: "Dos", nl: "Twee", emoji: "🍒" },
-            { es: "Tres", nl: "Drie", emoji: "🐥" },
-            { es: "Mamá", nl: "Mama", emoji: "👩" },
-            { es: "Papá", nl: "Papa", emoji: "👨" },
-            { es: "Perro", nl: "Hond", emoji: "🐶" },
-            { es: "Gato", nl: "Kat", emoji: "🐱" },
-            { es: "Casa", nl: "Huis", emoji: "🏠" },
-            { es: "Manzana", nl: "Appel", emoji: "🍎" },
-            { es: "Agua", nl: "Water", emoji: "💧" },
-            { es: "Leche", nl: "Melk", emoji: "🥛" },
-            { es: "Pan", nl: "Brood", emoji: "🍞" }
-        ];
+        // --- MASSIVE DATA (DUTCH NL -> SPANISH ES) ---
+        const DB = {
+            kid: [
+                { id: 'k1', title: 'Groeten', icon: 'hand-sparkles', type: 'quiz', content: [{ nl: 'Hallo', es: 'Hola' }, { nl: 'Tot ziens', es: 'Adiós' }, { nl: 'Bedankt', es: 'Gracias' }] },
+                { id: 'k2', title: 'Dieren', icon: 'paw', type: 'quiz', content: [{ nl: 'Hond', es: 'Perro' }, { nl: 'Kat', es: 'Gato' }, { nl: 'Vis', es: 'Pez' }, { nl: 'Vogel', es: 'Pájaro' }] },
+                { id: 'k3', title: 'Kleuren', icon: 'palette', type: 'memory', content: [{ nl: 'Rood', es: 'Rojo' }, { nl: 'Blauw', es: 'Azul' }, { nl: 'Groen', es: 'Verde' }, { nl: 'Geel', es: 'Amarillo' }] },
+                { id: 'k4', title: 'Familie', icon: 'users', type: 'quiz', content: [{ nl: 'Mama', es: 'Mamá' }, { nl: 'Papa', es: 'Papá' }, { nl: 'Broer', es: 'Hermano' }, { nl: 'Zus', es: 'Hermana' }] },
+                { id: 'k5', title: 'Tellen 1-5', icon: 'dice', type: 'quiz', content: [{ nl: 'Eén', es: 'Uno' }, { nl: 'Twee', es: 'Dos' }, { nl: 'Drie', es: 'Tres' }, { nl: 'Vier', es: 'Cuatro' }, { nl: 'Vijf', es: 'Cinco' }] },
+                { id: 'k6', title: 'Fruit', icon: 'apple-alt', type: 'memory', content: [{ nl: 'Appel', es: 'Manzana' }, { nl: 'Banaan', es: 'Plátano' }, { nl: 'Sinaasappel', es: 'Naranja' }] },
+                { id: 'k7', title: 'School', icon: 'school', type: 'quiz', content: [{ nl: 'Boek', es: 'Libro' }, { nl: 'Pen', es: 'Bolígrafo' }, { nl: 'School', es: 'Escuela' }, { nl: 'Leraar', es: 'Maestro' }] },
+                { id: 'k8', title: 'Lichaam', icon: 'child', type: 'quiz', content: [{ nl: 'Neus', es: 'Nariz' }, { nl: 'Mond', es: 'Boca' }, { nl: 'Oog', es: 'Ojo' }, { nl: 'Hand', es: 'Mano' }] },
+                { id: 'k9', title: 'Kleding', icon: 'tshirt', type: 'memory', content: [{ nl: 'Broek', es: 'Pantalón' }, { nl: 'Schoen', es: 'Zapato' }, { nl: 'Jurk', es: 'Vestido' }] },
+                { id: 'k10', title: 'Huis', icon: 'home', type: 'quiz', content: [{ nl: 'Huis', es: 'Casa' }, { nl: 'Deur', es: 'Puerta' }, { nl: 'Raam', es: 'Ventana' }, { nl: 'Bed', es: 'Cama' }] },
+                { id: 'k11', title: 'Eten', icon: 'pizza-slice', type: 'quiz', content: [{ nl: 'Brood', es: 'Pan' }, { nl: 'Kaas', es: 'Queso' }, { nl: 'Vis', es: 'Pescado' }, { nl: 'Vlees', es: 'Carne' }] },
+                { id: 'k12', title: 'Drinken', icon: 'glass-whiskey', type: 'quiz', content: [{ nl: 'Water', es: 'Agua' }, { nl: 'Melk', es: 'Leche' }, { nl: 'Sap', es: 'Zumo' }] },
+                { id: 'k13', title: 'Weer', icon: 'sun', type: 'memory', content: [{ nl: 'Zon', es: 'Sol' }, { nl: 'Regen', es: 'Lluvia' }, { nl: 'Wind', es: 'Viento' }] },
+                { id: 'k14', title: 'Dagen', icon: 'calendar-day', type: 'quiz', content: [{ nl: 'Maandag', es: 'Lunes' }, { nl: 'Vrijdag', es: 'Viernes' }, { nl: 'Zondag', es: 'Domingo' }] },
+                { id: 'k15', title: 'Emoties', icon: 'smile', type: 'quiz', content: [{ nl: 'Blij', es: 'Feliz' }, { nl: 'Boos', es: 'Enfadado' }, { nl: 'Bang', es: 'Miedo' }] },
+                { id: 'k16', title: 'Transport', icon: 'bus', type: 'memory', content: [{ nl: 'Auto', es: 'Coche' }, { nl: 'Fiets', es: 'Bicicleta' }, { nl: 'Bus', es: 'Autobús' }] },
+                { id: 'k17', title: 'Stad', icon: 'city', type: 'quiz', content: [{ nl: 'Park', es: 'Parque' }, { nl: 'Winkel', es: 'Tienda' }, { nl: 'Straat', es: 'Calle' }] },
+                { id: 'k18', title: 'Natuur', icon: 'tree', type: 'quiz', content: [{ nl: 'Boom', es: 'Árbol' }, { nl: 'Bloem', es: 'Flor' }, { nl: 'Bos', es: 'Bosque' }] },
+                { id: 'k19', title: 'Sport', icon: 'futbol', type: 'quiz', content: [{ nl: 'Voetbal', es: 'Fútbol' }, { nl: 'Tennis', es: 'Tenis' }, { nl: 'Zwemmen', es: 'Nadar' }] },
+                { id: 'k20', title: 'Speelgoed', icon: 'robot', type: 'memory', content: [{ nl: 'Bal', es: 'Pelota' }, { nl: 'Pop', es: 'Muñeca' }, { nl: 'Beer', es: 'Oso' }] },
+                { id: 'k21', title: 'Vormen', icon: 'shapes', type: 'quiz', content: [{ nl: 'Cirkel', es: 'Círculo' }, { nl: 'Vierkant', es: 'Cuadrado' }, { nl: 'Ster', es: 'Estrella' }] },
+                { id: 'k22', title: 'Beroepen', icon: 'user-md', type: 'quiz', content: [{ nl: 'Politie', es: 'Policía' }, { nl: 'Dokter', es: 'Médico' }, { nl: 'Brandweer', es: 'Bombero' }] },
+                { id: 'k23', title: 'Muziek', icon: 'music', type: 'memory', content: [{ nl: 'Gitaar', es: 'Guitarra' }, { nl: 'Piano', es: 'Piano' }, { nl: 'Zingen', es: 'Cantar' }] },
+                { id: 'k24', title: 'Feest', icon: 'birthday-cake', type: 'quiz', content: [{ nl: 'Verjaardag', es: 'Cumpleaños' }, { nl: 'Taart', es: 'Pastel' }, { nl: 'Cadeau', es: 'Regalo' }] },
+                { id: 'k25', title: 'Acties', icon: 'running', type: 'quiz', content: [{ nl: 'Rennen', es: 'Correr' }, { nl: 'Slapen', es: 'Dormir' }, { nl: 'Eten', es: 'Comer' }] },
+                { id: 'k26', title: 'Boerderij', icon: 'tractor', type: 'memory', content: [{ nl: 'Koe', es: 'Vaca' }, { nl: 'Varken', es: 'Cerdo' }, { nl: 'Schaap', es: 'Oveja' }] }
+            ],
+            adult: [
+                { id: 'a1', title: 'Basis', icon: 'comment', type: 'quiz', content: [{ nl: 'Hoe gaat het?', es: '¿Qué tal?' }, { nl: 'Ik heet...', es: 'Me llamo...' }, { nl: 'Alsjeblieft', es: 'Por favor' }] },
+                { id: 'a2', title: 'Bar', icon: 'glass-cheers', type: 'quiz', content: [{ nl: 'Een biertje', es: 'Una cerveza' }, { nl: 'De rekening', es: 'La cuenta' }, { nl: 'Proost', es: 'Salud' }] },
+                { id: 'a3', title: 'Reizen', icon: 'plane', type: 'quiz', content: [{ nl: 'Ticket', es: 'Billete' }, { nl: 'Paspoort', es: 'Pasaporte' }, { nl: 'Koffer', es: 'Maleta' }] },
+                { id: 'a4', title: 'Nood', icon: 'ambulance', type: 'quiz', content: [{ nl: 'Hulp', es: 'Ayuda' }, { nl: 'Dokter', es: 'Médico' }, { nl: 'Politie', es: 'Policía' }] },
+                { id: 'a5', title: 'Wonen', icon: 'home', type: 'memory', content: [{ nl: 'Huis', es: 'Casa' }, { nl: 'Keuken', es: 'Cocina' }, { nl: 'Bad', es: 'Baño' }] },
+                { id: 'a6', title: 'Werk', icon: 'briefcase', type: 'quiz', content: [{ nl: 'Baas', es: 'Jefe' }, { nl: 'Vergadering', es: 'Reunión' }, { nl: 'Geld', es: 'Dinero' }] },
+                { id: 'a7', title: 'Hotel', icon: 'bed', type: 'quiz', content: [{ nl: 'Reservering', es: 'Reserva' }, { nl: 'Sleutel', es: 'Llave' }, { nl: 'Ontbijt', es: 'Desayuno' }, { nl: 'Kamer', es: 'Habitación' }] },
+                { id: 'a8', title: 'Restaurant', icon: 'utensils', type: 'quiz', content: [{ nl: 'Menu', es: 'Menú' }, { nl: 'Ober', es: 'Camarero' }, { nl: 'Lekker', es: 'Rico' }, { nl: 'Ik wil...', es: 'Quiero...' }] },
+                { id: 'a9', title: 'Winkelen', icon: 'shopping-bag', type: 'quiz', content: [{ nl: 'Hoeveel kost het?', es: '¿Cuánto cuesta?' }, { nl: 'Duur', es: 'Caro' }, { nl: 'Goedkoop', es: 'Barato' }] },
+                { id: 'a10', title: 'Tijd', icon: 'clock', type: 'memory', content: [{ nl: 'Vandaag', es: 'Hoy' }, { nl: 'Morgen', es: 'Mañana' }, { nl: 'Gisteren', es: 'Ayer' }, { nl: 'Laat', es: 'Tarde' }] },
+                { id: 'a11', title: 'Datum', icon: 'calendar-alt', type: 'quiz', content: [{ nl: 'Maand', es: 'Mes' }, { nl: 'Jaar', es: 'Año' }, { nl: 'Week', es: 'Semana' }] },
+                { id: 'a12', title: 'Technologie', icon: 'wifi', type: 'quiz', content: [{ nl: 'Wachtwoord', es: 'Contraseña' }, { nl: 'Scherm', es: 'Pantalla' }, { nl: 'Oplader', es: 'Cargador' }] },
+                { id: 'a13', title: 'Liefde', icon: 'heart', type: 'quiz', content: [{ nl: 'Ik hou van je', es: 'Te quiero' }, { nl: 'Kus', es: 'Beso' }, { nl: 'Mooi', es: 'Guapo/a' }] },
+                { id: 'a14', title: 'Richting', icon: 'map-marked', type: 'quiz', content: [{ nl: 'Links', es: 'Izquierda' }, { nl: 'Rechts', es: 'Derecha' }, { nl: 'Rechtdoor', es: 'Todo recto' }] },
+                { id: 'a15', title: 'Openbaar Vervoer', icon: 'subway', type: 'quiz', content: [{ nl: 'Trein', es: 'Tren' }, { nl: 'Halte', es: 'Parada' }, { nl: 'Kaartje', es: 'Billete' }] },
+                { id: 'a16', title: 'Auto', icon: 'car', type: 'memory', content: [{ nl: 'Huren', es: 'Alquilar' }, { nl: 'Rijbewijs', es: 'Carnet' }, { nl: 'Benzine', es: 'Gasolina' }] },
+                { id: 'a17', title: 'Gezondheid', icon: 'first-aid', type: 'quiz', content: [{ nl: 'Pijn', es: 'Dolor' }, { nl: 'Apotheek', es: 'Farmacia' }, { nl: 'Koorts', es: 'Fiebre' }] },
+                { id: 'a18', title: 'Bank', icon: 'university', type: 'quiz', content: [{ nl: 'Pinnen', es: 'Pagar con tarjeta' }, { nl: 'Contant', es: 'Efectivo' }, { nl: 'Geldautomaat', es: 'Cajero' }] },
+                { id: 'a19', title: 'Strand', icon: 'umbrella-beach', type: 'memory', content: [{ nl: 'Zand', es: 'Arena' }, { nl: 'Zee', es: 'Mar' }, { nl: 'Handdoek', es: 'Toalla' }] },
+                { id: 'a20', title: 'Sport', icon: 'dumbbell', type: 'quiz', content: [{ nl: 'Sportschool', es: 'Gimnasio' }, { nl: 'Rennen', es: 'Correr' }, { nl: 'Wedstrijd', es: 'Partido' }] },
+                { id: 'a21', title: 'Kantoor', icon: 'laptop', type: 'quiz', content: [{ nl: 'Klant', es: 'Cliente' }, { nl: 'Bellen', es: 'Llamar' }, { nl: 'Email', es: 'Correo' }] },
+                { id: 'a22', title: 'Slang', icon: 'bolt', type: 'quiz', content: [{ nl: 'Gast', es: 'Tío' }, { nl: 'Leuk/Cool', es: 'Guay' }, { nl: 'Oké', es: 'Vale' }] },
+                { id: 'a23', title: 'Politiek', icon: 'newspaper', type: 'quiz', content: [{ nl: 'Nieuws', es: 'Noticias' }, { nl: 'Krant', es: 'Periódico' }, { nl: 'Waarheid', es: 'Verdad' }] },
+                { id: 'a24', title: 'Internet', icon: 'hashtag', type: 'memory', content: [{ nl: 'Volgen', es: 'Seguir' }, { nl: 'Delen', es: 'Compartir' }, { nl: 'Bericht', es: 'Mensaje' }] },
+                { id: 'a25', title: 'Afscheid', icon: 'door-open', type: 'quiz', content: [{ nl: 'Tot morgen', es: 'Hasta mañana' }, { nl: 'Dag', es: 'Adiós' }, { nl: 'Veel geluk', es: 'Suerte' }] },
+                { id: 'a26', title: 'Getallen', icon: 'sort-numeric-up', type: 'quiz', content: [{ nl: 'Twintig', es: 'Veinte' }, { nl: 'Honderd', es: 'Cien' }, { nl: 'Duizend', es: 'Mil' }] }
+            ]
+        };
 
-        let current = null;
-        let score = 0;
-        let completed = 0;
+        // --- STATE ---
+        let AppState = {
+            mode: 'adult',
+            score: parseInt(localStorage.getItem('score')) || 0,
+            streak: 1,
+            completed: JSON.parse(localStorage.getItem('completed')) || [],
+            currentLesson: null,
+            step: 0
+        };
 
-        function startGame() {
-            if (completed >= lessons.length) {
-                alert("Goed gedaan! Je bent een ster! 🌟");
-                completed = 0; score = 0;
-                document.getElementById('points').innerText = score;
-            }
+        // --- INIT ---
+        function initApp(mode) {
+            AppState.mode = mode;
+            document.body.setAttribute('data-mode', mode);
 
-            current = lessons[Math.floor(Math.random() * lessons.length)];
-            document.getElementById('target-word').innerText = current.es;
+            // Fade out splash
+            document.getElementById('splash').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('splash').classList.add('hidden');
+                document.getElementById('main-nav').classList.remove('hidden');
+                document.getElementById('app').classList.remove('hidden');
+                renderDashboard();
+                updateStats();
+            }, 500);
+        }
 
-            let options = [current];
-            while (options.length < 4) {
-                let rand = lessons[Math.floor(Math.random() * lessons.length)];
-                if (!options.includes(rand)) options.push(rand);
-            }
-            options.sort(() => Math.random() - 0.5);
+        // --- NAVIGATION ---
+        function switchTab(tab) {
+            document.getElementById('view-dashboard').classList.add('hidden');
+            document.getElementById('view-profile').classList.add('hidden');
+            document.getElementById('view-' + tab).classList.remove('hidden');
 
-            const grid = document.getElementById('grid');
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            const idx = tab === 'dashboard' ? 0 : 1;
+            document.querySelectorAll('.nav-item')[idx].classList.add('active');
+
+            if (tab === 'profile') renderProfile();
+        }
+
+        // --- RENDER DASHBOARD ---
+        function renderDashboard() {
+            const grid = document.getElementById('lesson-grid');
             grid.innerHTML = '';
-            options.forEach(opt => {
+
+            const lessons = DB[AppState.mode];
+            lessons.forEach((lesson, i) => {
+                const isDone = AppState.completed.includes(lesson.id);
                 const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `<span class="emoji">${opt.emoji}</span><span class="label">${opt.nl}</span>`;
-                card.onclick = () => check(opt, card);
+                card.className = `card ${isDone ? 'done' : ''}`;
+                card.innerHTML = `
+                    <div class="check-mark"><i class="fas fa-check-circle"></i></div>
+                    <div class="card-icon" style="color: ${AppState.mode === 'kid' ? 'var(--k-secondary)' : 'var(--a-primary)'}">
+                        <i class="fas fa-${lesson.icon}"></i>
+                    </div>
+                    <h3>${lesson.title}</h3>
+                `;
+                card.onclick = function () { openGame(lesson); };
+
+                card.style.animation = `fadeIn 0.5s ease forwards ${i * 0.05}s`;
+                card.style.opacity = '0';
+
                 grid.appendChild(card);
             });
-
-            playVoice();
         }
 
-        function playVoice() {
-            const msg = new SpeechSynthesisUtterance(current.es);
-            msg.lang = 'es-ES';
-            msg.rate = 0.7;
-            msg.pitch = 1.2; // Voz un poco más infantil/aguda
-            window.speechSynthesis.speak(msg);
+        function updateStats() {
+            document.getElementById('score').innerText = AppState.score;
+            document.getElementById('streak').innerText = AppState.streak;
         }
 
-        function check(selected, el) {
-            if (selected.es === current.es) {
-                score += 10;
-                completed++;
-                el.classList.add('correct-anim');
-                document.getElementById('points').innerText = score;
-                document.getElementById('progress').style.width = (completed / lessons.length * 100) + "%";
+        function renderProfile() {
+            document.getElementById('total-xp').innerText = AppState.score;
+            document.getElementById('profile-name').innerText = AppState.mode === 'kid' ? 'Kleine Held' : 'Urban Nomad';
 
-                confetti({
-                    particleCount: 80,
-                    spread: 50,
-                    origin: { y: 0.7 },
-                    colors: ['#90CAF9', '#FCE4EC', '#FFF9C4']
+            // Level logic based on 25+ lessons
+            const totalLessons = DB[AppState.mode].length * 50; // max xp
+            let pct = Math.min((AppState.score / totalLessons) * 100, 100);
+
+            document.getElementById('xp-bar').style.width = pct + '%';
+        }
+
+        // --- GAME ENGINE ---
+        function openGame(lesson) {
+            AppState.currentLesson = lesson;
+            AppState.step = 0;
+
+            document.getElementById('activity-view').classList.remove('hidden');
+            document.getElementById('main-nav').classList.add('hidden');
+            document.getElementById('lesson-title').innerText = lesson.title;
+
+            renderStep();
+        }
+
+        function closeActivity() {
+            document.getElementById('activity-view').classList.add('hidden');
+            document.getElementById('main-nav').classList.remove('hidden');
+            renderDashboard();
+            updateStats();
+        }
+
+        function renderStep() {
+            const container = document.getElementById('game-engine');
+            const nextBtn = document.getElementById('next-btn');
+            const feedback = document.getElementById('feedback');
+
+            container.innerHTML = '';
+            feedback.innerHTML = '';
+            nextBtn.classList.add('hidden');
+
+            const total = AppState.currentLesson.content.length;
+            const progress = (AppState.step / total) * 100;
+            document.getElementById('game-progress').style.width = progress + '%';
+
+            if (AppState.step >= total) {
+                finishGame(container);
+                return;
+            }
+
+            const item = AppState.currentLesson.content[AppState.step];
+
+            // --- QUIZ TYPE ---
+            if (AppState.currentLesson.type === 'quiz') {
+                container.innerHTML = `
+                    <div class="flashcard">
+                        <h2 style="font-size:2.5rem; margin-bottom:10px;">${item.nl}</h2>
+                        <p style="opacity:0.6;">Kies de vertaling (Selecciona)</p>
+                    </div>
+                `;
+
+                let options = [item.es];
+                // Distractors from same lesson
+                AppState.currentLesson.content.forEach(x => {
+                    if (x.es !== item.es && options.length < 3) options.push(x.es);
                 });
+                // Fallback distractors if lesson is small
+                while (options.length < 3) { options.push("Hola"); options.push("Sí"); }
 
-                setTimeout(startGame, 1200);
-            } else {
-                el.classList.add('error-anim');
-                setTimeout(() => el.classList.remove('error-anim'), 400);
+                options.sort(() => Math.random() - 0.5);
+
+                options.forEach(opt => {
+                    const btn = document.createElement('div');
+                    btn.className = 'btn-opt';
+                    btn.innerText = opt;
+                    btn.onclick = () => checkAnswer(opt, item.es, btn);
+                    container.appendChild(btn);
+                });
+            }
+
+            // --- MEMORY / LEARN TYPE ---
+            else if (AppState.currentLesson.type === 'memory') {
+                container.innerHTML = `
+                    <div class="flashcard" onclick="speak('${item.es}')">
+                         <i class="fas fa-volume-up" style="opacity:0.5; margin-bottom:10px;"></i>
+                        <h2 style="font-size:3rem; margin-bottom:10px; color:${AppState.mode === 'adult' ? 'var(--a-primary)' : 'var(--k-primary)'}">${item.es}</h2>
+                        <h3 style="opacity:0.8;">(${item.nl})</h3>
+                    </div>
+                `;
+
+                setTimeout(() => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn-primary';
+                    btn.innerText = 'Begrepen / Entendido';
+                    btn.style.width = '100%';
+                    btn.style.padding = '15px';
+                    btn.style.border = 'none';
+                    btn.style.cursor = 'pointer';
+                    btn.onclick = () => { AppState.step++; renderStep(); };
+                    container.appendChild(btn);
+                    speak(item.es);
+                }, 300);
             }
         }
 
-        startGame();
-    </script>
+        function checkAnswer(selected, correct, btn) {
+            const feedback = document.getElementById('feedback');
 
+            if (selected === correct) {
+                btn.classList.add('correct');
+                feedback.style.color = '#2ecc71';
+                feedback.innerText = 'Goed zo!';
+                speak(correct);
+
+                setTimeout(() => {
+                    AppState.step++;
+                    renderStep();
+                }, 1000);
+            } else {
+                btn.classList.add('wrong');
+                feedback.style.color = '#e74c3c';
+                feedback.innerText = 'Fout... probeer opnieuw';
+                if (navigator.vibrate) navigator.vibrate(200);
+            }
+        }
+
+        function finishGame(container) {
+            document.getElementById('game-progress').style.width = '100%';
+
+            if (!AppState.completed.includes(AppState.currentLesson.id)) {
+                AppState.completed.push(AppState.currentLesson.id);
+                AppState.score += 50;
+                localStorage.setItem('score', AppState.score);
+                localStorage.setItem('completed', JSON.stringify(AppState.completed));
+            }
+
+            container.innerHTML = `
+                <div style="text-align:center; padding:40px;">
+                    <i class="fas fa-trophy fa-5x" style="color:gold; margin-bottom:20px;"></i>
+                    <h2>Gefeliciteerd!</h2>
+                    <p>+50 XP</p>
+                </div>
+             `;
+
+            const btn = document.getElementById('next-btn');
+            btn.classList.remove('hidden');
+            btn.innerText = "TERUG NAAR MENU";
+            btn.onclick = closeActivity;
+        }
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = 'es-ES';
+                u.rate = 0.9;
+                window.speechSynthesis.speak(u);
+            }
+        }
+    </script>
 </body>
 
 </html>
