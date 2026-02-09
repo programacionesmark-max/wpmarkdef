@@ -305,7 +305,6 @@
             height: 100%;
             background: inherit;
             z-index: 2000;
-            /* SUPER HIGH Z-INDEX TO FIX ACCESS */
             display: flex;
             flex-direction: column;
             overflow-y: auto;
@@ -410,6 +409,138 @@
             border-color: #c0392b !important;
         }
 
+        /* --- NEW ACTIVITY TYPES --- */
+        .match-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .match-item {
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        body[data-mode="adult"] .match-item {
+            background: #1a1a1a;
+            border: 1px solid #333;
+        }
+
+        body[data-mode="kid"] .match-item {
+            background: white;
+            border: 2px solid #f0f0f0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .match-item.matched {
+            background: #2ecc71 !important;
+            color: white !important;
+            border-color: #27ae60 !important;
+            transform: scale(0.98);
+        }
+
+        .drag-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .drop-zone {
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px dashed #666;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body[data-mode="kid"] .drop-zone {
+            border-color: #ddd;
+            background: #f9f9f9;
+        }
+
+        .drag-item {
+            padding: 20px;
+            border-radius: 12px;
+            background: #222;
+            text-align: center;
+            cursor: grab;
+            font-weight: bold;
+        }
+
+        body[data-mode="kid"] .drag-item {
+            background: white;
+            border: 2px solid var(--k-secondary);
+            color: var(--k-text);
+        }
+
+        .drag-item:active {
+            cursor: grabbing;
+            opacity: 0.8;
+        }
+
+        .sentence-builder {
+            width: 100%;
+            background: #1a1a1a;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        body[data-mode="kid"] .sentence-builder {
+            background: white;
+            border: 2px solid #f0f0f0;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .word-piece {
+            padding: 12px 20px;
+            border-radius: 8px;
+            background: #333;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        body[data-mode="kid"] .word-piece {
+            background: var(--k-accent);
+            color: #333;
+        }
+
+        .sentence-display {
+            min-height: 80px;
+            border: 2px dashed #444;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        body[data-mode="kid"] .sentence-display {
+            border-color: #ddd;
+            background: #f9f9f9;
+        }
+
         /* --- SPLASH --- */
         #splash {
             position: fixed;
@@ -481,6 +612,88 @@
             border: 2px dashed #ddd;
             color: #888;
             background: #fff;
+        }
+
+        /* --- SPEAKING PRACTICE --- */
+        .mic-button {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            margin: 30px auto;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s;
+        }
+
+        .mic-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 5px 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .mic-button.listening {
+            animation: pulse 1.5s infinite;
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 176, 155, 0.7);
+            }
+
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 20px rgba(0, 176, 155, 0);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 176, 155, 0);
+            }
+        }
+
+        .transcript-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 60px;
+            text-align: center;
+            font-style: italic;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        body[data-mode="kid"] .transcript-box {
+            background: white;
+            border: 2px solid #eee;
+            color: #333;
+        }
+
+        .pronunciation-feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .pronunciation-feedback.good {
+            background: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            border: 1px solid #27ae60;
+        }
+
+        .pronunciation-feedback.needs-work {
+            background: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            border: 1px solid #c0392b;
         }
     </style>
 </head>
@@ -584,9 +797,10 @@
     </nav>
 
     <script>
-        // --- MASSIVE DATA (DUTCH NL -> SPANISH ES) ---
+        // --- MASSIVE EXPANDED DATA (DUTCH NL -> SPANISH ES) ---
         const DB = {
             kid: [
+                // Existing lessons...
                 { id: 'k1', title: 'Groeten', icon: 'hand-sparkles', type: 'quiz', content: [{ nl: 'Hallo', es: 'Hola' }, { nl: 'Tot ziens', es: 'Adiós' }, { nl: 'Bedankt', es: 'Gracias' }] },
                 { id: 'k2', title: 'Dieren', icon: 'paw', type: 'quiz', content: [{ nl: 'Hond', es: 'Perro' }, { nl: 'Kat', es: 'Gato' }, { nl: 'Vis', es: 'Pez' }, { nl: 'Vogel', es: 'Pájaro' }] },
                 { id: 'k3', title: 'Kleuren', icon: 'palette', type: 'memory', content: [{ nl: 'Rood', es: 'Rojo' }, { nl: 'Blauw', es: 'Azul' }, { nl: 'Groen', es: 'Verde' }, { nl: 'Geel', es: 'Amarillo' }] },
@@ -612,9 +826,66 @@
                 { id: 'k23', title: 'Muziek', icon: 'music', type: 'memory', content: [{ nl: 'Gitaar', es: 'Guitarra' }, { nl: 'Piano', es: 'Piano' }, { nl: 'Zingen', es: 'Cantar' }] },
                 { id: 'k24', title: 'Feest', icon: 'birthday-cake', type: 'quiz', content: [{ nl: 'Verjaardag', es: 'Cumpleaños' }, { nl: 'Taart', es: 'Pastel' }, { nl: 'Cadeau', es: 'Regalo' }] },
                 { id: 'k25', title: 'Acties', icon: 'running', type: 'quiz', content: [{ nl: 'Rennen', es: 'Correr' }, { nl: 'Slapen', es: 'Dormir' }, { nl: 'Eten', es: 'Comer' }] },
-                { id: 'k26', title: 'Boerderij', icon: 'tractor', type: 'memory', content: [{ nl: 'Koe', es: 'Vaca' }, { nl: 'Varken', es: 'Cerdo' }, { nl: 'Schaap', es: 'Oveja' }] }
+                { id: 'k26', title: 'Boerderij', icon: 'tractor', type: 'memory', content: [{ nl: 'Koe', es: 'Vaca' }, { nl: 'Varken', es: 'Cerdo' }, { nl: 'Schaap', es: 'Oveja' }] },
+
+                // NEW EXPANDED SECTIONS FOR KIDS
+                {
+                    id: 'k27', title: 'Pareo Juego', icon: 'puzzle-piece', type: 'matching', content: [
+                        { nl: 'Rojo', es: 'Rood', match: 'k27m1' },
+                        { nl: 'Azul', es: 'Blauw', match: 'k27m2' },
+                        { nl: 'Verde', es: 'Groen', match: 'k27m3' },
+                        { nl: 'Amarillo', es: 'Geel', match: 'k27m4' }
+                    ]
+                },
+                {
+                    id: 'k28', title: 'Arrastrar', icon: 'hand-point-up', type: 'dragdrop', content: [
+                        { nl: 'De gato', es: 'El gato', hint: 'El animal pequeño' },
+                        { nl: 'La casa', es: 'Het huis', hint: 'Donde vives' },
+                        { nl: 'El libro', es: 'Het boek', hint: 'Lees dit' }
+                    ]
+                },
+                {
+                    id: 'k29', title: 'Hablar', icon: 'microphone', type: 'speaking', content: [
+                        { nl: 'Hola, ¿cómo estás?', es: 'Hallo, hoe gaat het?' },
+                        { nl: 'Me llamo...', es: 'Mijn naam is...' },
+                        { nl: 'Gracias', es: 'Dank je' },
+                        { nl: 'Adiós', es: 'Tot ziens' }
+                    ]
+                },
+                {
+                    id: 'k30', title: 'Construir Frases', icon: 'keyboard', type: 'sentence', content: [
+                        { sentence: 'El perro es grande', words: ['El', 'perro', 'es', 'grande'] },
+                        { sentence: 'Me gusta el helado', words: ['Me', 'gusta', 'el', 'helado'] },
+                        { sentence: 'Voy a la escuela', words: ['Voy', 'a', 'la', 'escuela'] }
+                    ]
+                },
+                {
+                    id: 'k31', title: 'Números 6-10', icon: 'calculator', type: 'quiz', content: [
+                        { nl: 'Zes', es: 'Seis' }, { nl: 'Zeven', es: 'Siete' }, { nl: 'Acht', es: 'Ocho' },
+                        { nl: 'Negen', es: 'Nueve' }, { nl: 'Tien', es: 'Diez' }
+                    ]
+                },
+                {
+                    id: 'k32', title: 'Más Animales', icon: 'hippo', type: 'memory', content: [
+                        { nl: 'Leeuw', es: 'León' }, { nl: 'Olifant', es: 'Elefante' },
+                        { nl: 'Tijger', es: 'Tigre' }, { nl: 'Giraffe', es: 'Jirafa' }
+                    ]
+                },
+                {
+                    id: 'k33', title: 'Comidas Dulces', icon: 'cookie-bite', type: 'quiz', content: [
+                        { nl: 'Chocolade', es: 'Chocolate' }, { nl: 'Ijs', es: 'Helado' },
+                        { nl: 'Taart', es: 'Pastel' }, { nl: 'Koekje', es: 'Galleta' }
+                    ]
+                },
+                {
+                    id: 'k34', title: 'Mi Cuerpo', icon: 'user', type: 'memory', content: [
+                        { nl: 'Voet', es: 'Pie' }, { nl: 'Been', es: 'Pierna' },
+                        { nl: 'Brazo', es: 'Brazo' }, { nl: 'Dedo', es: 'Dedo' }
+                    ]
+                }
             ],
             adult: [
+                // Existing lessons...
                 { id: 'a1', title: 'Basis', icon: 'comment', type: 'quiz', content: [{ nl: 'Hoe gaat het?', es: '¿Qué tal?' }, { nl: 'Ik heet...', es: 'Me llamo...' }, { nl: 'Alsjeblieft', es: 'Por favor' }] },
                 { id: 'a2', title: 'Bar', icon: 'glass-cheers', type: 'quiz', content: [{ nl: 'Een biertje', es: 'Una cerveza' }, { nl: 'De rekening', es: 'La cuenta' }, { nl: 'Proost', es: 'Salud' }] },
                 { id: 'a3', title: 'Reizen', icon: 'plane', type: 'quiz', content: [{ nl: 'Ticket', es: 'Billete' }, { nl: 'Paspoort', es: 'Pasaporte' }, { nl: 'Koffer', es: 'Maleta' }] },
@@ -640,7 +911,68 @@
                 { id: 'a23', title: 'Politiek', icon: 'newspaper', type: 'quiz', content: [{ nl: 'Nieuws', es: 'Noticias' }, { nl: 'Krant', es: 'Periódico' }, { nl: 'Waarheid', es: 'Verdad' }] },
                 { id: 'a24', title: 'Internet', icon: 'hashtag', type: 'memory', content: [{ nl: 'Volgen', es: 'Seguir' }, { nl: 'Delen', es: 'Compartir' }, { nl: 'Bericht', es: 'Mensaje' }] },
                 { id: 'a25', title: 'Afscheid', icon: 'door-open', type: 'quiz', content: [{ nl: 'Tot morgen', es: 'Hasta mañana' }, { nl: 'Dag', es: 'Adiós' }, { nl: 'Veel geluk', es: 'Suerte' }] },
-                { id: 'a26', title: 'Getallen', icon: 'sort-numeric-up', type: 'quiz', content: [{ nl: 'Twintig', es: 'Veinte' }, { nl: 'Honderd', es: 'Cien' }, { nl: 'Duizend', es: 'Mil' }] }
+                { id: 'a26', title: 'Getallen', icon: 'sort-numeric-up', type: 'quiz', content: [{ nl: 'Twintig', es: 'Veinte' }, { nl: 'Honderd', es: 'Cien' }, { nl: 'Duizend', es: 'Mil' }] },
+
+                // NEW EXPANDED SECTIONS FOR ADULTS
+                {
+                    id: 'a27', title: 'Pareo Avanzado', icon: 'project-diagram', type: 'matching', content: [
+                        { nl: 'Empresa', es: 'Bedrijf', match: 'a27m1' },
+                        { nl: 'Reunión', es: 'Vergadering', match: 'a27m2' },
+                        { nl: 'Contrato', es: 'Contract', match: 'a27m3' },
+                        { nl: 'Cliente', es: 'Klant', match: 'a27m4' }
+                    ]
+                },
+                {
+                    id: 'a28', title: 'Drag & Drop', icon: 'mouse-pointer', type: 'dragdrop', content: [
+                        { nl: 'La reunión es importante', es: 'De vergadering is belangrijk', hint: 'Work meeting' },
+                        { nl: 'Necesito el informe', es: 'Ik heb het rapport nodig', hint: 'Document needed' },
+                        { nl: 'Vamos a almorzar', es: 'We gaan lunchen', hint: 'Lunch plans' }
+                    ]
+                },
+                {
+                    id: 'a29', title: 'Pronunciación', icon: 'microphone-alt', type: 'speaking', content: [
+                        { nl: '¿Dónde está la estación?', es: 'Waar is het station?' },
+                        { nl: 'Quisiera reservar una mesa', es: 'Ik zou graag een tafel reserveren' },
+                        { nl: '¿Cuánto cuesta este producto?', es: 'Hoeveel kost dit product?' },
+                        { nl: 'Necesito ayuda médica', es: 'Ik heb medische hulp nodig' }
+                    ]
+                },
+                {
+                    id: 'a30', title: 'Frases Completas', icon: 'keyboard', type: 'sentence', content: [
+                        { sentence: 'El cliente necesita el contrato mañana', words: ['El', 'cliente', 'necesita', 'el', 'contrato', 'mañana'] },
+                        { sentence: 'Voy a la conferencia por la tarde', words: ['Voy', 'a', 'la', 'conferencia', 'por', 'la', 'tarde'] },
+                        { sentence: 'La reserva está confirmada para viernes', words: ['La', 'reserva', 'está', 'confirmada', 'para', 'viernes'] }
+                    ]
+                },
+                {
+                    id: 'a31', title: 'Negocios', icon: 'chart-line', type: 'quiz', content: [
+                        { nl: 'Investering', es: 'Inversión' }, { nl: 'Marktaandeel', es: 'Cuota de mercado' },
+                        { nl: 'Strategie', es: 'Estrategia' }, { nl: 'Concurrentie', es: 'Competencia' }
+                    ]
+                },
+                {
+                    id: 'a32', title: 'Tecnología Avanzada', icon: 'microchip', type: 'memory', content: [
+                        { nl: 'Cloud computing', es: 'Computación en la nube' },
+                        { nl: 'Inteligencia artificial', es: 'Kunstmatige intelligentie' },
+                        { nl: 'Ciberseguridad', es: 'Cyberbeveiliging' }
+                    ]
+                },
+                {
+                    id: 'a33', title: 'Conversación', icon: 'comments', type: 'quiz', content: [
+                        { nl: '¿Podría hablar más despacio?', es: 'Kunt u langzamer praten?' },
+                        { nl: 'No entiendo', es: 'Ik begrijp het niet' },
+                        { nl: '¿Podría repetir?', es: 'Kunt u dat herhalen?' },
+                        { nl: 'Hablo un poco de español', es: 'Ik spreek een beetje Spaans' }
+                    ]
+                },
+                {
+                    id: 'a34', title: 'Viajes de Negocios', icon: 'briefcase', type: 'memory', content: [
+                        { nl: 'Pasaje de avión', es: 'Vliegticket' },
+                        { nl: 'Reembolso', es: 'Terugbetaling' },
+                        { nl: 'Itinerario', es: 'Reisplan' },
+                        { nl: 'Tarjeta de embarque', es: 'Boarding pass' }
+                    ]
+                }
             ]
         };
 
@@ -651,13 +983,25 @@
             streak: 1,
             completed: JSON.parse(localStorage.getItem('completed')) || [],
             currentLesson: null,
-            step: 0
+            step: 0,
+            selectedMatches: [],
+            sentenceWords: [],
+            recognition: null
         };
 
         // --- INIT ---
         function initApp(mode) {
             AppState.mode = mode;
             document.body.setAttribute('data-mode', mode);
+
+            // Initialize speech recognition if available
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                AppState.recognition = new SpeechRecognition();
+                AppState.recognition.lang = 'es-ES';
+                AppState.recognition.continuous = false;
+                AppState.recognition.interimResults = false;
+            }
 
             // Fade out splash
             document.getElementById('splash').style.opacity = '0';
@@ -718,10 +1062,8 @@
             document.getElementById('total-xp').innerText = AppState.score;
             document.getElementById('profile-name').innerText = AppState.mode === 'kid' ? 'Kleine Held' : 'Urban Nomad';
 
-            // Level logic based on 25+ lessons
-            const totalLessons = DB[AppState.mode].length * 50; // max xp
+            const totalLessons = DB[AppState.mode].length * 50;
             let pct = Math.min((AppState.score / totalLessons) * 100, 100);
-
             document.getElementById('xp-bar').style.width = pct + '%';
         }
 
@@ -729,6 +1071,8 @@
         function openGame(lesson) {
             AppState.currentLesson = lesson;
             AppState.step = 0;
+            AppState.selectedMatches = [];
+            AppState.sentenceWords = [];
 
             document.getElementById('activity-view').classList.remove('hidden');
             document.getElementById('main-nav').classList.add('hidden');
@@ -774,11 +1118,9 @@
                 `;
 
                 let options = [item.es];
-                // Distractors from same lesson
                 AppState.currentLesson.content.forEach(x => {
                     if (x.es !== item.es && options.length < 3) options.push(x.es);
                 });
-                // Fallback distractors if lesson is small
                 while (options.length < 3) { options.push("Hola"); options.push("Sí"); }
 
                 options.sort(() => Math.random() - 0.5);
@@ -792,7 +1134,7 @@
                 });
             }
 
-            // --- MEMORY / LEARN TYPE ---
+            // --- MEMORY TYPE ---
             else if (AppState.currentLesson.type === 'memory') {
                 container.innerHTML = `
                     <div class="flashcard" onclick="speak('${item.es}')">
@@ -815,8 +1157,303 @@
                     speak(item.es);
                 }, 300);
             }
+
+            // --- MATCHING GAME TYPE ---
+            else if (AppState.currentLesson.type === 'matching') {
+                container.innerHTML = `
+                    <div class="flashcard">
+                        <h3 style="margin-bottom:20px;">Empareja las palabras (Match the words)</h3>
+                        <p style="opacity:0.6;">Toca una palabra en español y luego su traducción</p>
+                    </div>
+                    <div class="match-grid" id="match-grid"></div>
+                `;
+
+                const grid = document.getElementById('match-grid');
+                const items = AppState.currentLesson.content;
+                let allItems = [];
+
+                // Create both Spanish and Dutch items
+                items.forEach(item => {
+                    allItems.push({ text: item.nl, matchId: item.match, type: 'nl' });
+                    allItems.push({ text: item.es, matchId: item.match, type: 'es' });
+                });
+
+                // Shuffle
+                allItems.sort(() => Math.random() - 0.5);
+
+                // Create buttons
+                allItems.forEach(item => {
+                    const btn = document.createElement('div');
+                    btn.className = 'match-item';
+                    btn.innerText = item.text;
+                    btn.dataset.matchId = item.matchId;
+                    btn.dataset.type = item.type;
+                    btn.onclick = () => handleMatchSelection(btn);
+                    grid.appendChild(btn);
+                });
+            }
+
+            // --- DRAG & DROP TYPE ---
+            else if (AppState.currentLesson.type === 'dragdrop') {
+                container.innerHTML = `
+                    <div class="flashcard">
+                        <h3 style="margin-bottom:20px;">${item.nl}</h3>
+                        <p style="opacity:0.6;">${item.hint}</p>
+                        <p><small>Arrastra la respuesta correcta</small></p>
+                    </div>
+                    <div class="drag-container">
+                        <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            Suelta la respuesta aquí
+                        </div>
+                        <div class="drag-item" draggable="true" id="drag-item" ondragstart="drag(event)">
+                            ${item.es}
+                        </div>
+                        <div class="drag-item" draggable="true" ondragstart="drag(event)">
+                            Respuesta incorrecta
+                        </div>
+                        <div class="drag-item" draggable="true" ondragstart="drag(event)">
+                            Otra opción
+                        </div>
+                    </div>
+                `;
+            }
+
+            // --- SPEAKING PRACTICE TYPE ---
+            else if (AppState.currentLesson.type === 'speaking') {
+                container.innerHTML = `
+                    <div class="flashcard">
+                        <h3 style="margin-bottom:20px;">Habla en español</h3>
+                        <h2 style="font-size:2rem; margin-bottom:20px;">"${item.nl}"</h2>
+                        <p style="opacity:0.6;">Di la frase en voz alta en español</p>
+                    </div>
+                    <div class="transcript-box" id="transcript-box">
+                        Tu pronunciación aparecerá aquí...
+                    </div>
+                    <button class="mic-button" id="mic-button" onclick="startListening()">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <div id="pronunciation-feedback" class="pronunciation-feedback"></div>
+                `;
+            }
+
+            // --- SENTENCE BUILDER TYPE ---
+            else if (AppState.currentLesson.type === 'sentence') {
+                const words = [...item.words];
+                words.sort(() => Math.random() - 0.5);
+                AppState.sentenceWords = words;
+
+                container.innerHTML = `
+                    <div class="flashcard">
+                        <h3 style="margin-bottom:20px;">Construye la frase</h3>
+                        <p style="opacity:0.6;">Ordena las palabras para formar la frase correcta</p>
+                    </div>
+                    <div class="sentence-builder">
+                        <div class="sentence-display" id="sentence-display"></div>
+                        <div class="word-bank" id="word-bank"></div>
+                    </div>
+                `;
+
+                const wordBank = document.getElementById('word-bank');
+                AppState.sentenceWords.forEach((word, index) => {
+                    const wordEl = document.createElement('div');
+                    wordEl.className = 'word-piece';
+                    wordEl.innerText = word;
+                    wordEl.dataset.index = index;
+                    wordEl.onclick = () => addToSentence(wordEl);
+                    wordBank.appendChild(wordEl);
+                });
+            }
         }
 
+        // --- MATCHING GAME LOGIC ---
+        function handleMatchSelection(button) {
+            if (button.classList.contains('matched')) return;
+
+            button.classList.add('matched');
+            AppState.selectedMatches.push(button);
+
+            if (AppState.selectedMatches.length === 2) {
+                const first = AppState.selectedMatches[0];
+                const second = AppState.selectedMatches[1];
+
+                if (first.dataset.matchId === second.dataset.matchId && first.dataset.type !== second.dataset.type) {
+                    // Correct match
+                    document.getElementById('feedback').innerText = '¡Correcto!';
+                    document.getElementById('feedback').style.color = '#2ecc71';
+
+                    setTimeout(() => {
+                        AppState.step++;
+                        AppState.selectedMatches = [];
+                        renderStep();
+                    }, 1000);
+                } else {
+                    // Wrong match
+                    document.getElementById('feedback').innerText = 'Inténtalo de nuevo';
+                    document.getElementById('feedback').style.color = '#e74c3c';
+
+                    setTimeout(() => {
+                        first.classList.remove('matched');
+                        second.classList.remove('matched');
+                        AppState.selectedMatches = [];
+                    }, 1000);
+                }
+            }
+        }
+
+        // --- DRAG & DROP FUNCTIONS ---
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const draggedElement = document.getElementById(data);
+            const dropZone = document.getElementById('drop-zone');
+
+            if (draggedElement.innerText === AppState.currentLesson.content[AppState.step].es) {
+                dropZone.innerHTML = `<i class="fas fa-check" style="color:#2ecc71; margin-right:10px;"></i> ${draggedElement.innerText}`;
+                dropZone.style.borderColor = '#2ecc71';
+                dropZone.style.background = 'rgba(46, 204, 113, 0.1)';
+
+                document.getElementById('feedback').innerText = '¡Perfecto!';
+                document.getElementById('feedback').style.color = '#2ecc71';
+
+                setTimeout(() => {
+                    AppState.step++;
+                    renderStep();
+                }, 1500);
+            } else {
+                dropZone.innerHTML = 'Inténtalo de nuevo';
+                dropZone.style.borderColor = '#e74c3c';
+                dropZone.style.background = 'rgba(231, 76, 60, 0.1)';
+                document.getElementById('feedback').innerText = 'Incorrecto, prueba otra vez';
+                document.getElementById('feedback').style.color = '#e74c3c';
+            }
+        }
+
+        // --- SPEAKING PRACTICE FUNCTIONS ---
+        function startListening() {
+            if (!AppState.recognition) {
+                document.getElementById('transcript-box').innerText = 'El reconocimiento de voz no está disponible';
+                return;
+            }
+
+            const micButton = document.getElementById('mic-button');
+            const transcriptBox = document.getElementById('transcript-box');
+            const feedbackBox = document.getElementById('pronunciation-feedback');
+
+            micButton.classList.add('listening');
+            transcriptBox.innerText = 'Escuchando...';
+            feedbackBox.innerHTML = '';
+
+            AppState.recognition.onresult = function (event) {
+                const transcript = event.results[0][0].transcript;
+                transcriptBox.innerText = `Dijiste: "${transcript}"`;
+
+                const correctAnswer = AppState.currentLesson.content[AppState.step].nl;
+                const similarity = calculateSimilarity(transcript.toLowerCase(), correctAnswer.toLowerCase());
+
+                if (similarity > 0.7) {
+                    feedbackBox.innerHTML = '<i class="fas fa-check-circle"></i> ¡Excelente pronunciación!';
+                    feedbackBox.className = 'pronunciation-feedback good';
+
+                    setTimeout(() => {
+                        AppState.step++;
+                        renderStep();
+                    }, 2000);
+                } else {
+                    feedbackBox.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Inténtalo de nuevo, escucha la pronunciación correcta:';
+                    feedbackBox.className = 'pronunciation-feedback needs-work';
+                    speak(correctAnswer);
+                }
+            };
+
+            AppState.recognition.onend = function () {
+                micButton.classList.remove('listening');
+            };
+
+            AppState.recognition.start();
+        }
+
+        function calculateSimilarity(str1, str2) {
+            // Simple similarity calculation
+            const longer = str1.length > str2.length ? str1 : str2;
+            const shorter = str1.length > str2.length ? str2 : str1;
+
+            if (longer.length === 0) return 1.0;
+
+            const distance = levenshteinDistance(longer, shorter);
+            return (longer.length - distance) / longer.length;
+        }
+
+        function levenshteinDistance(a, b) {
+            // Simple Levenshtein distance implementation
+            const matrix = [];
+            for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+            for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    const cost = a[j - 1] === b[i - 1] ? 0 : 1;
+                    matrix[i][j] = Math.min(
+                        matrix[i - 1][j] + 1,
+                        matrix[i][j - 1] + 1,
+                        matrix[i - 1][j - 1] + cost
+                    );
+                }
+            }
+
+            return matrix[b.length][a.length];
+        }
+
+        // --- SENTENCE BUILDER FUNCTIONS ---
+        function addToSentence(wordElement) {
+            const sentenceDisplay = document.getElementById('sentence-display');
+            const wordSpan = document.createElement('span');
+            wordSpan.className = 'word-piece';
+            wordSpan.innerText = wordElement.innerText;
+            wordSpan.style.margin = '5px';
+            wordSpan.style.cursor = 'pointer';
+            wordSpan.onclick = () => removeFromSentence(wordSpan, wordElement);
+            sentenceDisplay.appendChild(wordSpan);
+
+            wordElement.style.opacity = '0.5';
+            wordElement.style.cursor = 'default';
+            wordElement.onclick = null;
+
+            checkSentence();
+        }
+
+        function removeFromSentence(wordSpan, originalWord) {
+            wordSpan.remove();
+            originalWord.style.opacity = '1';
+            originalWord.style.cursor = 'pointer';
+            originalWord.onclick = () => addToSentence(originalWord);
+            checkSentence();
+        }
+
+        function checkSentence() {
+            const sentenceDisplay = document.getElementById('sentence-display');
+            const words = Array.from(sentenceDisplay.children).map(span => span.innerText);
+            const correctSentence = AppState.currentLesson.content[AppState.step].sentence.split(' ');
+
+            if (words.length === correctSentence.length && words.every((word, i) => word === correctSentence[i])) {
+                document.getElementById('feedback').innerText = '¡Frase correcta!';
+                document.getElementById('feedback').style.color = '#2ecc71';
+
+                setTimeout(() => {
+                    AppState.step++;
+                    renderStep();
+                }, 1500);
+            }
+        }
+
+        // --- CHECK ANSWER FUNCTION ---
         function checkAnswer(selected, correct, btn) {
             const feedback = document.getElementById('feedback');
 
@@ -853,6 +1490,7 @@
                     <i class="fas fa-trophy fa-5x" style="color:gold; margin-bottom:20px;"></i>
                     <h2>Gefeliciteerd!</h2>
                     <p>+50 XP</p>
+                    <p style="opacity:0.7; margin-top:10px;">${AppState.currentLesson.content.length} items completados</p>
                 </div>
              `;
 
